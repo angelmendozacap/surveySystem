@@ -23,3 +23,5 @@ Route::get('/surveys/{survey}/questions', 'QuestionsController@index');
 Route::post('/surveys/{survey}/questions', 'QuestionsController@store');
 Route::patch('/questions/{question}', 'QuestionsController@update');
 Route::delete('/questions/{question}', 'QuestionsController@destroy');
+
+Route::post('/option-groups', 'OptionGroupsController@store');

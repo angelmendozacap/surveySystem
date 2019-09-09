@@ -11,4 +11,9 @@ class OptionGroup extends Model
     protected $casts = [
         'options' => 'array'
     ];
+
+    public function path()
+    {
+        return url('/option-groups/'.$this->id);
+    }
 }

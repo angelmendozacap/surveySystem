@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\OptionGroup;
 use Illuminate\Http\Request;
+use App\Http\Resources\OptionGroup as OptionGroupResource;
 use App\Http\Requests\StoreOptionGroupRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,17 +17,8 @@ class OptionGroupsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $groups = OptionGroup::all();
+        return OptionGroupResource::collection($groups);
     }
 
     /**
@@ -38,7 +30,7 @@ class OptionGroupsController extends Controller
     public function store(StoreOptionGroupRequest $request)
     {
         $group = OptionGroup::create($request->all());
-        return response($group, Response::HTTP_CREATED);
+        return (new OptionGroupResource($group))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -47,20 +39,9 @@ class OptionGroupsController extends Controller
      * @param  \App\OptionGroup  $optionGroup
      * @return \Illuminate\Http\Response
      */
-    public function show(OptionGroup $optionGroup)
+    public function show(OptionGroup $group)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\OptionGroup  $optionGroup
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(OptionGroup $optionGroup)
-    {
-        //
+        return (new OptionGroupResource($group))->response()->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -70,9 +51,10 @@ class OptionGroupsController extends Controller
      * @param  \App\OptionGroup  $optionGroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OptionGroup $optionGroup)
+    public function update(StoreOptionGroupRequest $request, OptionGroup $group)
     {
-        //
+        $group->update($request->all());
+        return (new OptionGroupResource($group))->response()->setStatusCode(Response::HTTP_OK);
     }
 
     /**
@@ -81,8 +63,9 @@ class OptionGroupsController extends Controller
      * @param  \App\OptionGroup  $optionGroup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OptionGroup $optionGroup)
+    public function destroy(OptionGroup $group)
     {
-        //
+        $group->delete();
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }

@@ -6,6 +6,7 @@ use App\Survey;
 use App\Question;
 use App\InputType;
 use Tests\TestCase;
+use App\OptionGroup;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -62,6 +63,7 @@ class QuestionsTest extends TestCase
                 'is_required' => false,
                 'survey_id' => $survey->id,
                 'input_type' => 'text',
+                'option_group' => null
             ]
         ]);
 
@@ -86,6 +88,7 @@ class QuestionsTest extends TestCase
                 'is_required' => false,
                 'survey_id' => $survey->id,
                 'input_type' => $input->name,
+                'option_group' => null
             ]
         ]);
 
@@ -159,6 +162,7 @@ class QuestionsTest extends TestCase
                 'is_required' => $question->is_required,
                 'survey_id' => $question->survey_id,
                 'input_type' => 'text',
+                'option_group' => null
             ]
         ]);
     }
@@ -166,13 +170,44 @@ class QuestionsTest extends TestCase
     /** @test */
     public function a_question_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
         $question = factory(Question::class)->create();
         $response = $this->delete("/api/questions/{$question->id}");
 
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertCount(0, Question::all());
+    }
+
+    /** @test */
+    public function an_option_group_can_be_selected_by_a_question()
+    {
+        $this->withoutExceptionHandling();
+        $question = factory(Question::class)->create();
+        $group = factory(OptionGroup::class)->create();
+        $response = $this->patch("/api/questions/{$question->id}",
+            array_merge($this->data(),['option_group_id' => $group->id]));
+
+        $question = $question->fresh();
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertEquals('Pregunta Uno', $question->name);
+        $this->assertEquals('Subtext', $question->subtext);
+        $this->assertEquals(true, $question->is_required);
+        $this->assertEquals('text', $question->inputType->name);
+
+        $response->assertJson([
+            'data' => [
+                'question_id' => 1,
+                'name' => $question->name,
+                'subtext' => $question->subtext,
+                'is_required' => $question->is_required,
+                'survey_id' => $question->survey_id,
+                'input_type' => 'text',
+                'option_group' => $group->name_group
+            ]
+        ]);
+
     }
 
     private function data()
@@ -182,6 +217,7 @@ class QuestionsTest extends TestCase
             'subtext' => 'Subtext',
             'is_required' => true,
             'input_type_id' => 'text',
+            'option_group_id' => null
         ];
     }
 }

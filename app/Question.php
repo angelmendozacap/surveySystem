@@ -28,4 +28,9 @@ class Question extends Model
     {
         return $this->belongsTo(InputType::class);
     }
+
+    public function optionGroup()
+    {
+        return $this->belongsTo(OptionGroup::class);
+    }
 }

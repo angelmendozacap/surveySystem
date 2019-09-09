@@ -16,4 +16,9 @@ class OptionGroup extends Model
     {
         return url('/option-groups/'.$this->id);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

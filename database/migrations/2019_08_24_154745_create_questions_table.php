@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('survey_id');
             $table->unsignedBigInteger('input_type_id');
+            $table->unsignedBigInteger('option_group_id')->nullable();
             $table->string('name');
             $table->text('subtext')->nullable();
             $table->boolean('is_required')->default(false);

@@ -21,6 +21,7 @@ class Question extends JsonResource
             'survey_id' => $this->survey_id,
             'is_required' => $this->is_required,
             'input_type' => $this->inputType->name,
+            'option_group' => $this->optionGroup->name_group ?? $this->option_group_id
         ];
     }
 }

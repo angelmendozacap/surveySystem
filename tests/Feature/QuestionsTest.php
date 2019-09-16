@@ -30,14 +30,17 @@ class QuestionsTest extends TestCase
             'data' => [
                 [
                     'survey_id' => $survey->id,
+                    'code_name' => "s{$survey->id}_q1",
                     'input_type' => 'text',
                 ],
                 [
                     'survey_id' => $survey->id,
+                    'code_name' => "s{$survey->id}_q2",
                     'input_type' => 'text',
                 ],
                 [
                     'survey_id' => $survey->id,
+                    'code_name' => "s{$survey->id}_q3",
                     'input_type' => 'text',
                 ]
             ]
@@ -59,6 +62,7 @@ class QuestionsTest extends TestCase
             'data' => [
                 'question_id' => 1,
                 'name' => 'Pregunta',
+                'code_name' => "s{$survey->id}_q1",
                 'subtext' => null,
                 'is_required' => false,
                 'survey_id' => $survey->id,
@@ -84,6 +88,7 @@ class QuestionsTest extends TestCase
             'data' => [
                 'question_id' => 1,
                 'name' => 'Pregunta',
+                'code_name' => "s{$survey->id}_q1",
                 'subtext' => null,
                 'is_required' => false,
                 'survey_id' => $survey->id,
@@ -158,6 +163,7 @@ class QuestionsTest extends TestCase
             'data' => [
                 'question_id' => 1,
                 'name' => $question->name,
+                'code_name' => "{$question->code_name_input}",
                 'subtext' => $question->subtext,
                 'is_required' => $question->is_required,
                 'survey_id' => $question->survey_id,
@@ -200,6 +206,7 @@ class QuestionsTest extends TestCase
             'data' => [
                 'question_id' => 1,
                 'name' => $question->name,
+                'code_name' => "{$question->code_name_input}",
                 'subtext' => $question->subtext,
                 'is_required' => $question->is_required,
                 'survey_id' => $question->survey_id,

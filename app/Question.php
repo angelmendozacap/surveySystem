@@ -19,6 +19,18 @@ class Question extends Model
         ])->id;
     }
 
+    public function getCodeNameInputAttribute()
+    {
+        return "s{$this->survey->id}_q{$this->id}";
+    }
+
+    // QueryScopes
+    public function scopeCurrentSurveyQuestions($query, $survey_id)
+    {
+        return $query->where('survey_id', $survey_id);
+    }
+
+    // Relationships
     public function survey()
     {
         return $this->belongsTo(Survey::class);

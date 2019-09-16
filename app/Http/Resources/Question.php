@@ -17,6 +17,7 @@ class Question extends JsonResource
         return [
             'question_id' => $this->id,
             'name' => $this->name,
+            'code_name' => $this->code_name_input,
             'subtext' => $this->subtext,
             'survey_id' => $this->survey_id,
             'is_required' => $this->is_required,

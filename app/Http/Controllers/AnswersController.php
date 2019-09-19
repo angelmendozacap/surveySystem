@@ -23,7 +23,7 @@ class AnswersController extends Controller
         if (count($currentQuestions) !== count($request->all()) ) {
             return response([
                 "message" => "Datos enviados incorrectos"
-            ], Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         };
 
         foreach ($currentQuestions as $question) {
@@ -52,12 +52,11 @@ class AnswersController extends Controller
         // dd([
         //     'answers_array' => $arrayAnswers
         // ]);
-
         $answers = $survey->answers()->create([
             'answers_array' => $arrayAnswers
         ]);
 
-        dd($answers);
+        // dd($answers);
 
         $this->arrayRequiredQuestions = [];
         return response([], Response::HTTP_CREATED);

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Survey;
 use App\Question;
 use Tests\TestCase;
@@ -15,6 +16,8 @@ class SurveysTest extends TestCase
     /** @test */
     public function a_list_of_surveys_can_be_retrieved()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $anotherSurvey = factory(Survey::class)->create();
 
@@ -44,6 +47,8 @@ class SurveysTest extends TestCase
     /** @test */
     public function create_a_new_survey()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $response = $this->post('/api/surveys', $this->data());
 
         $survey = Survey::first();
@@ -66,6 +71,8 @@ class SurveysTest extends TestCase
     /** @test */
     public function name_must_be_required()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $response = $this->post('/api/surveys', array_merge($this->data(), ['name' => '']));
 
         $response->assertSessionHasErrors('name');
@@ -76,6 +83,9 @@ class SurveysTest extends TestCase
     public function description_can_be_nullable()
     {
         $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $response = $this->post('/api/surveys', array_except($this->data(), ['description']));
 
         $survey = Survey::first();
@@ -87,6 +97,8 @@ class SurveysTest extends TestCase
     /** @test */
     public function a_survey_can_be_retrieved()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $response = $this->get('/api/surveys/'.$survey->id);
 
@@ -107,6 +119,8 @@ class SurveysTest extends TestCase
     /** @test */
     public function a_survey_can_be_patched()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $response = $this->patch('/api/surveys/'.$survey->id, array_merge($this->data(), ['status' => 'ready']));
 
@@ -137,6 +151,9 @@ class SurveysTest extends TestCase
     public function a_survey_can_be_deleted()
     {
         $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $questions = factory(Question::class, 3)->create(['survey_id' =>$survey->id]);
 

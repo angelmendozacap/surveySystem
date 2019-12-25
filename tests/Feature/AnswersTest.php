@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Answer;
 use App\Survey;
 use App\Question;
@@ -18,6 +19,9 @@ class AnswersTest extends TestCase
     public function text_questions_can_be_answered()
     {
         // $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $questionOne = factory(Question::class)->create([
             'survey_id' => $survey->id,
@@ -57,6 +61,9 @@ class AnswersTest extends TestCase
     public function text_questions_answers_must_be_required()
     {
         // $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $questionOne = factory(Question::class)->create([
             'survey_id' => $survey->id,
@@ -98,6 +105,8 @@ class AnswersTest extends TestCase
     /** @test */
     public function radio_questions_can_be_asnwered()
     {
+        $this->actingAs($user = factory(User::class)->create(), 'api');
+
         $survey = factory(Survey::class)->create();
         $questionOne = factory(Question::class)->create([
             'survey_id' => $survey->id,

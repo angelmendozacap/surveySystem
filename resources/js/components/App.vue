@@ -17,12 +17,21 @@
 import Header from './Header'
 import Sidebar from './Sidebar'
 
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     Header,
     Sidebar
+  },
+  methods: {
+    ...mapActions('User', [
+      'fetchAuthUser'
+    ])
+  },
+  mounted() {
+    this.fetchAuthUser()
   }
 }
 </script>

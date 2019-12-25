@@ -5,13 +5,21 @@
     </router-link>
 
     <div class="h-full px-4 py-1 text-white bg-blue-600 hover:bg-blue-500 flex items-center">
-      <h3 class="text-capitalize">Alfredo Mendoza</h3>
+      <h3 class="text-capitalize" v-if="authUser" v-text="authUser.data.name"></h3>
     </div>
   </header>
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: {
+    ...mapGetters('User', [
+      'authUser'
+    ])
+  }
 }
 </script>

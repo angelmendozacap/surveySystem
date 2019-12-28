@@ -1,6 +1,7 @@
 <template>
-  <nav class="py-4">
-    <div class="mb-8">
+  <nav v-if="authUser" class="py-4">
+
+    <div v-if="isCreator" class="mb-8">
       <h5 class="text-gray-500 text-xs uppercase font-bold">Creador</h5>
 
       <ul>
@@ -12,19 +13,13 @@
       </ul>
     </div>
 
-    <div class="mb-8">
-      <h5 class="text-gray-500 text-xs uppercase font-bold">General</h5>
+    <div v-if="isStudent" class="mb-8">
+      <h5 class="text-gray-500 text-xs uppercase font-bold">Estudiante</h5>
 
       <ul>
         <li>
           <router-link to="/contacts" class="link">
-            <span class="tracking-wide">Contactos</span>
-          </router-link>
-        </li>
-
-        <li>
-          <router-link to="/birthdays" class="link">
-            <span class="tracking-wide">Cumpleaños</span>
+            <span class="tracking-wide">Encuestas</span>
           </router-link>
         </li>
       </ul>
@@ -47,8 +42,30 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
+import { Roles } from '../helpers/roles'
+
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  computed: {
+    ...mapGetters('User', [
+      'authUser'
+    ]),
+
+    isAdmin() {
+      return this.authUser.data.role.data.name === Roles.Admin
+    },
+
+    isCreator() {
+      return this.authUser.data.role.data.name === Roles.Creator || this.isAdmin
+    },
+
+    isStudent() {
+      return this.authUser.data.role.data.name === Roles.Student || this.isAdmin
+    }
+  }
 }
 </script>
 

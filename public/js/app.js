@@ -1795,6 +1795,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _helpers_roles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/roles */ "./resources/js/helpers/roles.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1838,13 +1846,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Sidebar'
+  name: 'Sidebar',
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('User', ['authUser']), {
+    isAdmin: function isAdmin() {
+      return this.authUser.data.role.data.name === _helpers_roles__WEBPACK_IMPORTED_MODULE_1__["Roles"].Admin;
+    },
+    isCreator: function isCreator() {
+      return this.authUser.data.role.data.name === _helpers_roles__WEBPACK_IMPORTED_MODULE_1__["Roles"].Creator || this.isAdmin;
+    },
+    isStudent: function isStudent() {
+      return this.authUser.data.role.data.name === _helpers_roles__WEBPACK_IMPORTED_MODULE_1__["Roles"].Student || this.isAdmin;
+    }
+  })
 });
 
 /***/ }),
@@ -20978,73 +20994,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { staticClass: "py-4" }, [
-    _c("div", { staticClass: "mb-8" }, [
-      _c("h5", { staticClass: "text-gray-500 text-xs uppercase font-bold" }, [
-        _vm._v("Creador")
-      ]),
-      _vm._v(" "),
-      _c("ul", [
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              { staticClass: "link", attrs: { to: { name: "home" } } },
-              [
-                _c("span", { staticClass: "tracking-wide" }, [
-                  _vm._v("Crear Encuesta")
-                ])
-              ]
-            )
-          ],
-          1
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "mb-8" }, [
-      _c("h5", { staticClass: "text-gray-500 text-xs uppercase font-bold" }, [
-        _vm._v("General")
-      ]),
-      _vm._v(" "),
-      _c("ul", [
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              { staticClass: "link", attrs: { to: "/contacts" } },
-              [
-                _c("span", { staticClass: "tracking-wide" }, [
-                  _vm._v("Contactos")
-                ])
-              ]
-            )
-          ],
-          1
-        ),
+  return _vm.authUser
+    ? _c("nav", { staticClass: "py-4" }, [
+        _vm.isCreator
+          ? _c("div", { staticClass: "mb-8" }, [
+              _c(
+                "h5",
+                { staticClass: "text-gray-500 text-xs uppercase font-bold" },
+                [_vm._v("Creador")]
+              ),
+              _vm._v(" "),
+              _c("ul", [
+                _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      { staticClass: "link", attrs: { to: { name: "home" } } },
+                      [
+                        _c("span", { staticClass: "tracking-wide" }, [
+                          _vm._v("Crear Encuesta")
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "li",
-          [
-            _c(
-              "router-link",
-              { staticClass: "link", attrs: { to: "/birthdays" } },
-              [
-                _c("span", { staticClass: "tracking-wide" }, [
-                  _vm._v("Cumpleaños")
-                ])
-              ]
-            )
-          ],
-          1
-        )
+        _vm.isStudent
+          ? _c("div", { staticClass: "mb-8" }, [
+              _c(
+                "h5",
+                { staticClass: "text-gray-500 text-xs uppercase font-bold" },
+                [_vm._v("Estudiante")]
+              ),
+              _vm._v(" "),
+              _c("ul", [
+                _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      { staticClass: "link", attrs: { to: "/contacts" } },
+                      [
+                        _c("span", { staticClass: "tracking-wide" }, [
+                          _vm._v("Encuestas")
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._m(0)
       ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -37529,6 +37539,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sidebar_vue_vue_type_template_id_81fbb27e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/roles.js":
+/*!***************************************!*\
+  !*** ./resources/js/helpers/roles.js ***!
+  \***************************************/
+/*! exports provided: Roles */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Roles", function() { return Roles; });
+var Roles = {
+  Admin: 'admin',
+  Creator: 'creator',
+  Student: 'student'
+};
 
 /***/ }),
 

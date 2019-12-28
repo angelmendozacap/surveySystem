@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Start from './views/Start'
 
-// Views
-import SurveyList from './views/SurveyList'
+// Modules
+import { SurveyRoutes } from './modules/Survey/routes'
 
 Vue.use(VueRouter)
 
@@ -13,11 +13,7 @@ const routes = [
     name: 'home',
     component: Start
   },
-  {
-    path: '/surveys',
-    name: 'surveyList',
-    component: SurveyList
-  }
+  ...SurveyRoutes
 ]
 
 export default new VueRouter({

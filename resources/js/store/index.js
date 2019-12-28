@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 // Modules
 import User from './modules/user'
-import { SurveyStore } from './modules/survey'
+import { SurveyStore } from '../modules/Survey/store'
 
 
 Vue.use(Vuex)

@@ -1,8 +1,8 @@
 <template>
-  <div class="p-4">
+  <section class="p-4">
     <h1 class="text-3xl text-left">Lista de Encuestas</h1>
 
-  </div>
+  </section>
 </template>
 
 <script>

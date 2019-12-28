@@ -102,9 +102,12 @@ class SurveysTest extends TestCase
     /** @test */
     public function description_can_be_nullable()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
+        $role = factory(Role::class)->create(['name' => 'admin']);
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $user = factory(User::class)->create(['role_id' => $role->id]);
+
+        $this->actingAs($user, 'api');
 
         $response = $this->post('/api/surveys', array_except($this->data(), ['description']));
 
@@ -139,7 +142,13 @@ class SurveysTest extends TestCase
     /** @test */
     public function a_survey_can_be_patched()
     {
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $this->withoutExceptionHandling();
+
+        $role = factory(Role::class)->create(['name' => 'admin']);
+
+        $user = factory(User::class)->create(['role_id' => $role->id]);
+
+        $this->actingAs($user, 'api');
 
         $survey = factory(Survey::class)->create();
         $response = $this->patch('/api/surveys/'.$survey->id, array_merge($this->data(), ['status' => 'ready']));
@@ -172,7 +181,11 @@ class SurveysTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $role = factory(Role::class)->create(['name' => 'admin']);
+
+        $user = factory(User::class)->create(['role_id' => $role->id]);
+
+        $this->actingAs($user, 'api');
 
         $survey = factory(Survey::class)->create();
         $questions = factory(Question::class, 3)->create(['survey_id' =>$survey->id]);

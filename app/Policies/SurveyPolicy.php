@@ -55,7 +55,9 @@ class SurveyPolicy
      */
     public function update(User $user, Survey $survey)
     {
-        //
+        return in_array(strtolower($user->role->name), [
+            'admin', 'creator'
+        ]);
     }
 
     /**
@@ -67,7 +69,9 @@ class SurveyPolicy
      */
     public function delete(User $user, Survey $survey)
     {
-        //
+        return in_array(strtolower($user->role->name), [
+            'admin', 'creator'
+        ]);
     }
 
     /**

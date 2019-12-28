@@ -55,6 +55,8 @@ class SurveysController extends Controller
      */
     public function update(StoreSurveyRequest $request, Survey $survey)
     {
+        $this->authorize('update', $survey);
+
         $survey->update($request->all());
         return (new SurveyResource($survey))->response()->setStatusCode(Response::HTTP_OK);
     }
@@ -67,6 +69,8 @@ class SurveysController extends Controller
      */
     public function destroy(Survey $survey)
     {
+        $this->authorize('delete', $survey);
+
         $survey->delete();
         return response([], Response::HTTP_NO_CONTENT);
     }

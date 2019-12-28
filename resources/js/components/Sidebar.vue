@@ -10,6 +10,12 @@
             <span class="tracking-wide">Crear Encuesta</span>
           </router-link>
         </li>
+
+        <li>
+          <router-link :to="{name: 'surveyList'}" class="link">
+            <span class="tracking-wide">Lista de Encuestas</span>
+          </router-link>
+        </li>
       </ul>
     </div>
 

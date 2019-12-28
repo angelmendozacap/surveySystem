@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Role;
 use App\User;
 use App\Survey;
 use App\Question;
@@ -47,25 +48,44 @@ class SurveysTest extends TestCase
     /** @test */
     public function create_a_new_survey()
     {
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        collect(['admin', 'creator'])
+            ->each(function ($field) {
+                $rol = factory(Role::class)->create(['name' => $field]);
+
+                $user = factory(User::class)->create(['role_id' => $rol->id]);
+
+                $response = $this->actingAs($user, 'api')
+                    ->post('/api/surveys', $this->data());
+
+                $survey = Survey::all()->last();
+
+                $this->assertEquals('Test Survey', $survey->name);
+                $this->assertEquals('A New Test Description', $survey->description);
+                $this->assertEquals('draft', $survey->status);
+
+                $response->assertStatus(Response::HTTP_CREATED);
+                $response->assertJson([
+                    'data' => [
+                        'survey_id' => $survey->id,
+                    ],
+                    'links' => [
+                        'self' => $survey->path(),
+                    ]
+                ]);
+            });
+    }
+
+    /** @test */
+    public function only_admin_and_creator_users_can_create_surveys()
+    {
+        $rol = factory(Role::class)->create(['name' => 'student']);
+
+        $user = factory(User::class)->create(['role_id' => $rol->id]);
+
+        $this->actingAs($user, 'api');
 
         $response = $this->post('/api/surveys', $this->data());
-
-        $survey = Survey::first();
-
-        $this->assertEquals('Test Survey', $survey->name);
-        $this->assertEquals('A New Test Description', $survey->description);
-        $this->assertEquals('draft', $survey->status);
-
-        $response->assertStatus(Response::HTTP_CREATED);
-        $response->assertJson([
-            'data' => [
-                'survey_id' => $survey->id,
-            ],
-            'links' => [
-                'self' => $survey->path(),
-            ]
-        ]);
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */

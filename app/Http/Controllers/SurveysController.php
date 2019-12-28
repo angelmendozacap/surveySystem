@@ -29,6 +29,8 @@ class SurveysController extends Controller
      */
     public function store(StoreSurveyRequest $request)
     {
+        $this->authorize('create', Survey::class);
+
         $survey = Survey::create($request->all());
         return (new SurveyResource($survey))->response()->setStatusCode(Response::HTTP_CREATED);
     }

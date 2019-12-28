@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Role as RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class User extends JsonResource
+class Role extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +16,12 @@ class User extends JsonResource
     {
         return [
             'data' => [
-                'user_id' => $this->id,
-                'role' => new RoleResource($this->role),
+                'role_id' => $this->id,
                 'name' => $this->name,
-                'email' => $this->email,
                 'created_at' => $this->created_at->diffForHumans(),
             ],
             'links' => [
-                'self' => url('/users/'.$this->id),
+                'self' => url('/roles/'.$this->id),
             ],
         ];
     }

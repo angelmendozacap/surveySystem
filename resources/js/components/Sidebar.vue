@@ -6,7 +6,7 @@
 
       <ul>
         <li>
-          <router-link :to="{name: 'home'}" class="link">
+          <router-link :to="{name: 'surveyCreate'}" class="link">
             <span class="tracking-wide">Crear Encuesta</span>
           </router-link>
         </li>

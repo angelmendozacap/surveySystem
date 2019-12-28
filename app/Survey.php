@@ -19,7 +19,7 @@ class Survey extends Model
 
     public function path()
     {
-        return url('/surveys/'.$this->id);
+        return '/surveys/' . $this->id;
     }
 
     public function questions()

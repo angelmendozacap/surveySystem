@@ -26,6 +26,10 @@ export const SurveyStore = {
       const res = await axios.get('/api/surveys')
       commit(SET_SURVEYS, res.data)
     },
+    getSurvey: async ({ commit }, surveyId) => {
+      const res = await axios.get(`/api/surveys/${surveyId}`)
+      commit(SET_SURVEY, res.data)
+    },
     createSurvey: async ({ commit }, { name, description, status }) => {
       try {
         const res = await axios.post('/api/surveys', { name, description, status })

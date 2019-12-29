@@ -1,6 +1,6 @@
 import SurveyList from './views/SurveyList'
+import ShowSurvey from './views/ShowSurvey'
 import CreateSurvey from './views/CreateSurvey'
-
 
 export const SurveyRoutes = [
   {
@@ -9,8 +9,13 @@ export const SurveyRoutes = [
     component: SurveyList
   },
   {
+    path: '/surveys/:surveyId',
+    name: 'showSurvey',
+    component: ShowSurvey
+  },
+  {
     path: '/surveys/create',
-    name: 'surveyCreate',
+    name: 'createSurvey',
     component: CreateSurvey
   }
 ]

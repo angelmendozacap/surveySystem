@@ -2057,6 +2057,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'ShowSurvey',
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Survey', ['getSurvey'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Survey', ['surveyItem'])),
+  mounted: function mounted() {
+    this.getSurvey(this.$route.params.surveyId);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=script&lang=js& ***!
@@ -21367,7 +21408,7 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "link",
-                        attrs: { to: { name: "surveyCreate" } }
+                        attrs: { to: { name: "createSurvey" } }
                       },
                       [
                         _c("span", { staticClass: "tracking-wide" }, [
@@ -21542,6 +21583,54 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.surveyItem
+    ? _c("section", { staticClass: "p-4" }, [
+        _c("div", { staticClass: "p-4 mb-5 rounded bg-white shadow" }, [
+          _c("h1", { staticClass: "text-3xl text-left text-blue-500" }, [
+            _vm._v("Encuesta | " + _vm._s(_vm.surveyItem.data.survey_name))
+          ]),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-2" }),
+          _vm._v(" "),
+          _c("p", {
+            staticClass: "mb-2",
+            domProps: { textContent: _vm._s(_vm.surveyItem.data.description) }
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "py-2 px-4 rounded bg-yellow-500 hover:bg-yellow-400 text-white"
+            },
+            [_vm._v("Agregar Pregunta")]
+          )
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38159,7 +38248,9 @@ var Roles = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SurveyRoutes", function() { return SurveyRoutes; });
 /* harmony import */ var _views_SurveyList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/SurveyList */ "./resources/js/modules/Survey/views/SurveyList.vue");
-/* harmony import */ var _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/CreateSurvey */ "./resources/js/modules/Survey/views/CreateSurvey.vue");
+/* harmony import */ var _views_ShowSurvey__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/ShowSurvey */ "./resources/js/modules/Survey/views/ShowSurvey.vue");
+/* harmony import */ var _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/CreateSurvey */ "./resources/js/modules/Survey/views/CreateSurvey.vue");
+
 
 
 var SurveyRoutes = [{
@@ -38167,9 +38258,13 @@ var SurveyRoutes = [{
   name: 'surveyList',
   component: _views_SurveyList__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
+  path: '/surveys/:surveyId',
+  name: 'showSurvey',
+  component: _views_ShowSurvey__WEBPACK_IMPORTED_MODULE_1__["default"]
+}, {
   path: '/surveys/create',
-  name: 'surveyCreate',
-  component: _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_1__["default"]
+  name: 'createSurvey',
+  component: _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_2__["default"]
 }];
 
 /***/ }),
@@ -38252,19 +38347,50 @@ var SurveyStore = {
 
       return getSurveys;
     }(),
-    createSurvey: function () {
-      var _createSurvey = _asyncToGenerator(
+    getSurvey: function () {
+      var _getSurvey = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, _ref3) {
-        var commit, name, description, status, res;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, surveyId) {
+        var commit, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 commit = _ref2.commit;
-                name = _ref3.name, description = _ref3.description, status = _ref3.status;
-                _context2.prev = 2;
-                _context2.next = 5;
+                _context2.next = 3;
+                return axios.get("/api/surveys/".concat(surveyId));
+
+              case 3:
+                res = _context2.sent;
+                commit(SET_SURVEY, res.data);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function getSurvey(_x2, _x3) {
+        return _getSurvey.apply(this, arguments);
+      }
+
+      return getSurvey;
+    }(),
+    createSurvey: function () {
+      var _createSurvey = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, _ref4) {
+        var commit, name, description, status, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                name = _ref4.name, description = _ref4.description, status = _ref4.status;
+                _context3.prev = 2;
+                _context3.next = 5;
                 return axios.post('/api/surveys', {
                   name: name,
                   description: description,
@@ -38272,25 +38398,25 @@ var SurveyStore = {
                 });
 
               case 5:
-                res = _context2.sent;
+                res = _context3.sent;
                 commit(SET_SURVEY, res.data);
-                _context2.next = 12;
+                _context3.next = 12;
                 break;
 
               case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](2);
-                commit(SET_ERRORS, _context2.t0.response.data.errors);
+                _context3.prev = 9;
+                _context3.t0 = _context3["catch"](2);
+                commit(SET_ERRORS, _context3.t0.response.data.errors);
 
               case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[2, 9]]);
+        }, _callee3, null, [[2, 9]]);
       }));
 
-      function createSurvey(_x2, _x3) {
+      function createSurvey(_x4, _x5) {
         return _createSurvey.apply(this, arguments);
       }
 
@@ -38373,6 +38499,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurvey_vue_vue_type_template_id_279db536___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSurvey_vue_vue_type_template_id_279db536___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/views/ShowSurvey.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/modules/Survey/views/ShowSurvey.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowSurvey.vue?vue&type=template&id=7b358bf7& */ "./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7&");
+/* harmony import */ var _ShowSurvey_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowSurvey.vue?vue&type=script&lang=js& */ "./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowSurvey_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/modules/Survey/views/ShowSurvey.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowSurvey_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowSurvey.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowSurvey_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowSurvey.vue?vue&type=template&id=7b358bf7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/ShowSurvey.vue?vue&type=template&id=7b358bf7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowSurvey_vue_vue_type_template_id_7b358bf7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -7,6 +7,10 @@
       <button class="py-2 px-4 rounded bg-yellow-500 hover:bg-yellow-400 text-white">Agregar Pregunta</button>
     </div>
 
+    <div class="p-4 mb-5 rounded bg-white shadow">
+      <p v-if="!questionsList.length" class="text-red-500 text-center font-medium">No se encontraron preguntas</p>
+      <div v-else>Si hay</div>
+    </div>
 
   </section>
 </template>
@@ -17,16 +21,21 @@ export default {
   name: 'ShowSurvey',
   methods: {
     ...mapActions('Survey', [
-      'getSurvey'
+      'getSurvey',
+      'getQuestions'
     ])
   },
   computed: {
     ...mapGetters('Survey', [
-      'surveyItem'
+      'surveyItem',
+      'questionsList'
     ])
   },
   mounted() {
-    this.getSurvey(this.$route.params.surveyId)
+    const surveyId = this.$route.params.surveyId
+
+    this.getSurvey(surveyId)
+    this.getQuestions(surveyId)
   }
 }
 </script>

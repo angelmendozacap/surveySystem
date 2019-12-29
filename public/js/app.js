@@ -2086,13 +2086,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ShowSurvey',
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Survey', ['getSurvey'])),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Survey', ['surveyItem'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Survey', ['getSurvey', 'getQuestions'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Survey', ['surveyItem', 'questionsList'])),
   mounted: function mounted() {
-    this.getSurvey(this.$route.params.surveyId);
+    var surveyId = this.$route.params.surveyId;
+    this.getSurvey(surveyId);
+    this.getQuestions(surveyId);
   }
 });
 
@@ -2121,11 +2127,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SurveyList',
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Survey', ['getSurveys'])),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('Survey', ['surveyList'])),
+  name: "SurveyList",
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("Survey", ["getSurveys"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("Survey", ["surveyList"])),
   mounted: function mounted() {
     this.getSurveys();
   }
@@ -21626,6 +21655,14 @@ var render = function() {
             },
             [_vm._v("Agregar Pregunta")]
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-4 mb-5 rounded bg-white shadow" }, [
+          !_vm.questionsList.length
+            ? _c("p", { staticClass: "text-red-500 text-center font-medium" }, [
+                _vm._v("No se encontraron preguntas")
+              ])
+            : _c("div", [_vm._v("Si hay")])
         ])
       ])
     : _vm._e()
@@ -21652,20 +21689,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("section", { staticClass: "p-4" }, [
+    _c("h1", { staticClass: "text-3xl mb-2 text-left" }, [
+      _vm._v("Lista de Encuestas")
+    ]),
+    _vm._v(" "),
+    !_vm.surveyList.length
+      ? _c(
+          "p",
+          {
+            staticClass:
+              "p-4 mb-5 rounded bg-white shadow text-red-500 text-center font-medium"
+          },
+          [_vm._v("No se encontraron encuestas")]
+        )
+      : _c(
+          "div",
+          { staticClass: "mb-5 rounded bg-white shadow" },
+          _vm._l(_vm.surveyList, function(survey, index) {
+            return _c(
+              "router-link",
+              {
+                key: index,
+                staticClass:
+                  "p-4 border-b border-gray-400 hover:bg-gray-200 cursor-pointer",
+                attrs: { to: survey.links.self, tag: "article" }
+              },
+              [
+                _c("div", { staticClass: "flex items-center" }, [
+                  _c("h2", {
+                    staticClass: "text-xl font-semibold text-blue-500",
+                    domProps: { textContent: _vm._s(survey.data.survey_name) }
+                  }),
+                  _vm._v(" "),
+                  _c("span", {
+                    staticClass: "ml-2 mt-1 w-3 h-3 rounded-full",
+                    class: {
+                      "bg-green-600": survey.data.status === "ready",
+                      "bg-accent": survey.data.status === "draft"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-gray-600" }, [
+                  _vm._v("Creado " + _vm._s(survey.data.created_at))
+                ])
+              ]
+            )
+          }),
+          1
+        )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "p-4" }, [
-      _c("h1", { staticClass: "text-3xl text-left" }, [
-        _vm._v("Lista de Encuestas")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38273,12 +38349,13 @@ var SurveyRoutes = [{
 /*!**********************************************!*\
   !*** ./resources/js/modules/Survey/store.js ***!
   \**********************************************/
-/*! exports provided: SET_SURVEYS, SET_SURVEY, SET_ERRORS, SurveyStore */
+/*! exports provided: SET_SURVEYS, SET_QUESTIONS, SET_SURVEY, SET_ERRORS, SurveyStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SURVEYS", function() { return SET_SURVEYS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_QUESTIONS", function() { return SET_QUESTIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SURVEY", function() { return SET_SURVEY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_ERRORS", function() { return SET_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SurveyStore", function() { return SurveyStore; });
@@ -38295,18 +38372,23 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var SET_SURVEYS = 'survey/SET_SURVEYS';
+var SET_QUESTIONS = 'survey/SET_QUESTIONS';
 var SET_SURVEY = 'survey/SET_SURVEY';
 var SET_ERRORS = 'survey/SET_ERRORS';
 var SurveyStore = {
   namespaced: true,
   state: {
     surveys: [],
+    questions: [],
     survey: null,
     errors: null
   },
   getters: {
     surveyList: function surveyList(state) {
       return state.surveys;
+    },
+    questionsList: function questionsList(state) {
+      return state.questions;
     },
     surveyItem: function surveyItem(state) {
       return state.survey;
@@ -38331,7 +38413,7 @@ var SurveyStore = {
 
               case 3:
                 res = _context.sent;
-                commit(SET_SURVEYS, res.data);
+                commit(SET_SURVEYS, res.data.data);
 
               case 5:
               case "end":
@@ -38347,8 +38429,8 @@ var SurveyStore = {
 
       return getSurveys;
     }(),
-    getSurvey: function () {
-      var _getSurvey = _asyncToGenerator(
+    getQuestions: function () {
+      var _getQuestions = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, surveyId) {
         var commit, res;
@@ -38358,11 +38440,11 @@ var SurveyStore = {
               case 0:
                 commit = _ref2.commit;
                 _context2.next = 3;
-                return axios.get("/api/surveys/".concat(surveyId));
+                return axios.get("/api/surveys/".concat(surveyId, "/questions"));
 
               case 3:
                 res = _context2.sent;
-                commit(SET_SURVEY, res.data);
+                commit(SET_QUESTIONS, res.data.data);
 
               case 5:
               case "end":
@@ -38372,7 +38454,38 @@ var SurveyStore = {
         }, _callee2);
       }));
 
-      function getSurvey(_x2, _x3) {
+      function getQuestions(_x2, _x3) {
+        return _getQuestions.apply(this, arguments);
+      }
+
+      return getQuestions;
+    }(),
+    getSurvey: function () {
+      var _getSurvey = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, surveyId) {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.next = 3;
+                return axios.get("/api/surveys/".concat(surveyId));
+
+              case 3:
+                res = _context3.sent;
+                commit(SET_SURVEY, res.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function getSurvey(_x4, _x5) {
         return _getSurvey.apply(this, arguments);
       }
 
@@ -38381,16 +38494,16 @@ var SurveyStore = {
     createSurvey: function () {
       var _createSurvey = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, _ref4) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref4, _ref5) {
         var commit, name, description, status, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref3.commit;
-                name = _ref4.name, description = _ref4.description, status = _ref4.status;
-                _context3.prev = 2;
-                _context3.next = 5;
+                commit = _ref4.commit;
+                name = _ref5.name, description = _ref5.description, status = _ref5.status;
+                _context4.prev = 2;
+                _context4.next = 5;
                 return axios.post('/api/surveys', {
                   name: name,
                   description: description,
@@ -38398,25 +38511,25 @@ var SurveyStore = {
                 });
 
               case 5:
-                res = _context3.sent;
+                res = _context4.sent;
                 commit(SET_SURVEY, res.data);
-                _context3.next = 12;
+                _context4.next = 12;
                 break;
 
               case 9:
-                _context3.prev = 9;
-                _context3.t0 = _context3["catch"](2);
-                commit(SET_ERRORS, _context3.t0.response.data.errors);
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](2);
+                commit(SET_ERRORS, _context4.t0.response.data.errors);
 
               case 12:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, null, [[2, 9]]);
+        }, _callee4, null, [[2, 9]]);
       }));
 
-      function createSurvey(_x4, _x5) {
+      function createSurvey(_x6, _x7) {
         return _createSurvey.apply(this, arguments);
       }
 
@@ -38425,6 +38538,8 @@ var SurveyStore = {
   },
   mutations: (_mutations = {}, _defineProperty(_mutations, SET_SURVEYS, function (state, payload) {
     state.surveys = payload;
+  }), _defineProperty(_mutations, SET_QUESTIONS, function (state, payload) {
+    state.questions = payload;
   }), _defineProperty(_mutations, SET_SURVEY, function (state, payload) {
     state.surveys.push(payload);
     state.survey = payload;

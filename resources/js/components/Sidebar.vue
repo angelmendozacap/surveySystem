@@ -37,7 +37,7 @@
 
       <ul>
         <li>
-          <a href="#" class="link link--red">
+          <a href="#" @click.prevent="logout" class="link link--red">
             <span class="tracking-wide">Logout</span>
           </a>
         </li>
@@ -55,6 +55,17 @@ import { Roles } from '../helpers/roles'
 
 export default {
   name: 'Sidebar',
+  methods: {
+    async logout() {
+      try {
+        await axios.post('/logout', {})
+      } catch (err) {
+        if (err.response.status === 401) {
+          window.location = '/login'
+        }
+      }
+    }
+  },
   computed: {
     ...mapGetters('User', [
       'authUser'

@@ -20,7 +20,6 @@ export const QuestionStore = {
     },
     createQuestion: async ({ commit }, surveyId) => {
       const res = await axios.post(`/api/surveys/${surveyId}/questions`)
-      console.log(res)
       commit(CREATE_QUESTION, res.data)
     }
   },

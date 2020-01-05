@@ -7,12 +7,13 @@
           :value="'¿'+question.name+'?'"
           id="name"
           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
+          placeholder="Pregunta"
         />
       </div>
 
       <div class="w-1/2 px-2">
         <div class="relative">
-          <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+          <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
             <option>Párrafo</option>
             <option>Option 2</option>
             <option>Option 3</option>
@@ -25,7 +26,15 @@
       </div>
     </div>
 
-    <div class="w-full mb-4">
+    <span v-if="!withDescription && question.subtext == null">
+      <a
+        @click.prevent="withDescription = !withDescription"
+        class="-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer"
+      >
+        Agregar Descripción (opcional)
+      </a>
+    </span>
+    <div v-else class="w-full mb-4">
       <label
         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
         for="subtext"
@@ -47,6 +56,11 @@ export default {
     question: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      withDescription: false
     }
   }
 };

@@ -11,6 +11,10 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/questions/{question}', 'QuestionsController@update');
     Route::delete('/questions/{question}', 'QuestionsController@destroy');
 
+    Route::get('/input-types', 'InputTypeController@index');
+    Route::post('/input-types', 'InputTypeController@store');
+    Route::delete('/input-types/{inputType}', 'InputTypeController@destroy');
+
     Route::get('/option-groups', 'OptionGroupsController@index');
     Route::post('/option-groups', 'OptionGroupsController@store');
     Route::get('/option-groups/{group}', 'OptionGroupsController@show');

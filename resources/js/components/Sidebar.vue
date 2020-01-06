@@ -1,25 +1,39 @@
 <template>
   <nav v-if="authUser" class="py-4">
 
-    <div v-if="isCreator" class="mb-8">
-      <h5 class="text-gray-500 text-xs uppercase font-bold">Creador</h5>
+    <div v-if="isCreator" class="mb-6">
+      <h4 class="text-gray-500 text-xs uppercase font-bold">Creador</h4>
 
-      <ul>
-        <li>
-          <router-link :to="{name: 'createSurvey'}" class="link">
-            <span class="tracking-wide">Crear Encuesta</span>
-          </router-link>
-        </li>
+      <div class="pl-2 my-2">
+        <h5 class="text-gray-500 uppercase text-xs font-bold">Tipos de Preguntas</h5>
+        <ul>
+          <li>
+            <router-link :to="{name: 'inputTypeList'}" class="link">
+              <span class="tracking-wide">Lista de Tipos</span>
+            </router-link>
+          </li>
+        </ul>
+      </div>
 
-        <li>
-          <router-link :to="{name: 'surveyList'}" class="link">
-            <span class="tracking-wide">Lista de Encuestas</span>
-          </router-link>
-        </li>
-      </ul>
+      <div class="pl-2 my-2">
+        <h5 class="text-gray-500 uppercase text-xs font-bold">Encuestas</h5>
+        <ul>
+          <li>
+            <router-link :to="{name: 'createSurvey'}" class="link">
+              <span class="tracking-wide">Crear Encuesta</span>
+            </router-link>
+          </li>
+
+          <li>
+            <router-link :to="{name: 'surveyList'}" class="link">
+              <span class="tracking-wide">Lista de Encuestas</span>
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div v-if="isStudent" class="mb-8">
+    <div v-if="isStudent" class="mb-6">
       <h5 class="text-gray-500 text-xs uppercase font-bold">Estudiante</h5>
 
       <ul>

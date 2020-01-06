@@ -4,6 +4,7 @@ import Start from './views/Start'
 
 // Modules
 import { SurveyRoutes } from './modules/Survey/routes'
+import { InputTypeRoutes } from './modules/InputType/routes'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,8 @@ const routes = [
     name: 'home',
     component: Start
   },
-  ...SurveyRoutes
+  ...SurveyRoutes,
+  ...InputTypeRoutes
 ]
 
 export default new VueRouter({

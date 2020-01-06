@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import User from './modules/user'
 import { SurveyStore } from '../modules/Survey/store'
 import { QuestionStore } from '../modules/Question/store'
+import { InputTypeStore } from '../modules/InputType/store'
 
 
 Vue.use(Vuex)
@@ -13,6 +14,7 @@ export default new Vuex.Store({
   modules: {
     User,
     Survey: { ...SurveyStore },
-    Question: { ...QuestionStore }
+    Question: { ...QuestionStore },
+    InputType: { ...InputTypeStore}
   }
 })

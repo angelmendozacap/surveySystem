@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Survey;
 use App\Question;
+use App\InputType;
 use Illuminate\Http\Request;
-use App\Http\Resources\Question as QuestionResource;
 use App\Http\Requests\StoreQuestionRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Question as QuestionResource;
 
 class QuestionsController extends Controller
 {
@@ -30,11 +31,16 @@ class QuestionsController extends Controller
      */
     public function store(Survey $survey)
     {
+        $defaultInputType = InputType::firstOrCreate([
+            'type' => 'radio',
+            'display_name' => 'Opción Múltiple'
+        ]);
+
         $question = $survey->questions()->create([
             'name' => 'Pregunta',
             'subtext' => null,
             'is_required' => false,
-            'input_type_id' => 'text'
+            'input_type_id' => $defaultInputType->id
         ]);
         return (new QuestionResource($question))->response()->setStatusCode(Response::HTTP_CREATED);
     }

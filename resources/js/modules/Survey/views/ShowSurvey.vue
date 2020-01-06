@@ -31,7 +31,7 @@
 
 <script>
 
-import QuestionEditItem from '../../Question/components/QuestionEditItem'
+import QuestionEditItem from '../components/QuestionEditItem'
 
 import { mapActions, mapGetters } from "vuex";
 

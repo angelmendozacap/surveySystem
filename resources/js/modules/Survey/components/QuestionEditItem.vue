@@ -14,9 +14,12 @@
       <div class="w-1/2 px-2">
         <div class="relative">
           <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
-            <option>Párrafo</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
+            <option
+              v-for="(inputType,index) in inputTypes"
+              :key="index"
+              :value="inputType.data.id"
+              v-text="inputType.data.display_name"
+            ></option>
           </select>
 
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -55,6 +58,10 @@ export default {
   props: {
     question: {
       type: Object,
+      required: true
+    },
+    inputTypes: {
+      type: Array,
       required: true
     }
   },

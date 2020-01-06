@@ -12,13 +12,6 @@ class Question extends Model
         'is_required' => 'boolean',
     ];
 
-    public function setInputTypeIdAttribute($input_type)
-    {
-        $this->attributes['input_type_id'] = InputType::firstOrCreate([
-            'name' => strtolower($input_type),
-        ])->id;
-    }
-
     public function getCodeNameInputAttribute()
     {
         return "s{$this->survey->id}_q{$this->id}";

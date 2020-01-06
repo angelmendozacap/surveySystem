@@ -5,7 +5,7 @@ export const SET_ERRORS = 'question/SET_ERRORS'
 export const QuestionStore = {
   namespaced: true,
   state: {
-    questions: [],
+    questions: null,
     errors: null
   },
   getters: {
@@ -16,7 +16,7 @@ export const QuestionStore = {
   actions: {
     getQuestions: async ({ commit }, surveyId) => {
       const res = await axios.get(`/api/surveys/${surveyId}/questions`)
-      commit(SET_QUESTIONS, res.data.data)
+      commit(SET_QUESTIONS, res.data)
     },
     createQuestion: async ({ commit }, surveyId) => {
       const res = await axios.post(`/api/surveys/${surveyId}/questions`)

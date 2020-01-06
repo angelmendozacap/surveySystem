@@ -2188,6 +2188,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2242,21 +2249,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "QuestionEditItem",
   props: {
     question: {
       type: Object,
       required: true
-    },
-    inputTypes: {
-      type: Array,
-      required: true
     }
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('InputType', ["inputTypesList"])),
   data: function data() {
     return {
-      withDescription: false
+      withDescription: false,
+      inputTypeId: this.question.data.input_type.data.id || 0
     };
   }
 });
@@ -2433,12 +2440,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     QuestionEditItem: _components_QuestionEditItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Survey", ["getSurvey"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Question", ["getQuestions", "createQuestion"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Survey", ["getSurvey"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Question", ["getQuestions", "createQuestion"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("InputType", ["getInputTypes"])),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("Survey", ["surveyItem"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("Question", ["questionsList"])),
   mounted: function mounted() {
     var surveyId = this.$route.params.surveyId;
     this.getSurvey(surveyId);
     this.getQuestions(surveyId);
+    this.getInputTypes();
   }
 });
 
@@ -22255,62 +22263,93 @@ var render = function() {
           staticClass:
             "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
           attrs: { type: "text", id: "name", placeholder: "Pregunta" },
-          domProps: { value: "¿" + _vm.question.name + "?" }
+          domProps: { value: "¿" + _vm.question.data.name + "?" }
         })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "w-1/2 px-2" }, [
-        _c("div", { staticClass: "relative" }, [
-          _c(
-            "select",
-            {
-              staticClass:
-                "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-            },
-            _vm._l(_vm.inputTypes, function(inputType, index) {
-              return _c("option", {
-                key: index,
-                domProps: {
-                  value: inputType.data.id,
-                  textContent: _vm._s(inputType.data.display_name)
-                }
-              })
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-            },
-            [
+        _vm.inputTypesList
+          ? _c("div", { staticClass: "relative" }, [
               _c(
-                "svg",
+                "select",
                 {
-                  staticClass: "fill-current h-4 w-4",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 20 20"
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.inputTypeId,
+                      expression: "inputTypeId"
+                    }
+                  ],
+                  staticClass:
+                    "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.inputTypeId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      d:
-                        "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                    }
+                  _c("option", { attrs: { value: "0", disabled: "" } }, [
+                    _vm._v("Seleccione una Opción")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.inputTypesList.data, function(inputType, index) {
+                    return _c("option", {
+                      key: index,
+                      domProps: {
+                        value: inputType.data.id,
+                        textContent: _vm._s(inputType.data.display_name)
+                      }
+                    })
                   })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "fill-current h-4 w-4",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
-            ]
-          )
-        ])
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
-    !_vm.withDescription && _vm.question.subtext == null
+    !_vm.withDescription && _vm.question.data.subtext == null
       ? _c("span", [
           _c(
             "a",
@@ -22334,7 +22373,7 @@ var render = function() {
             staticClass:
               "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
             attrs: { type: "text", id: "subtext" },
-            domProps: { value: _vm.question.subtext }
+            domProps: { value: _vm.question.data.subtext }
           })
         ])
   ])
@@ -22565,7 +22604,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        !_vm.questionsList.length
+        !_vm.questionsList
           ? _c("div", { staticClass: "p-4 mb-5 rounded bg-white shadow" }, [
               _c("p", { staticClass: "text-red-500 text-center font-medium" }, [
                 _vm._v("No se encontraron preguntas")
@@ -22574,7 +22613,7 @@ var render = function() {
           : _c(
               "div",
               { staticClass: "mb-5 rounded bg-white shadow" },
-              _vm._l(_vm.questionsList, function(question, index) {
+              _vm._l(_vm.questionsList.data, function(question, index) {
                 return _c("QuestionEditItem", {
                   key: index,
                   attrs: { question: question }
@@ -39616,7 +39655,7 @@ var SET_ERRORS = 'question/SET_ERRORS';
 var QuestionStore = {
   namespaced: true,
   state: {
-    questions: [],
+    questions: null,
     errors: null
   },
   getters: {
@@ -39640,7 +39679,7 @@ var QuestionStore = {
 
               case 3:
                 res = _context.sent;
-                commit(SET_QUESTIONS, res.data.data);
+                commit(SET_QUESTIONS, res.data);
 
               case 5:
               case "end":

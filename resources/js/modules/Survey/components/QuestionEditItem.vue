@@ -4,7 +4,7 @@
       <div class="w-1/2 px-2">
         <input
           type="text"
-          :value="'¿'+question.name+'?'"
+          :value="'¿'+question.data.name+'?'"
           id="name"
           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
           placeholder="Pregunta"
@@ -12,10 +12,11 @@
       </div>
 
       <div class="w-1/2 px-2">
-        <div class="relative">
-          <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
+        <div v-if="inputTypesList" class="relative">
+          <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline" v-model="inputTypeId">
+            <option value="0" disabled>Seleccione una Opción</option>
             <option
-              v-for="(inputType,index) in inputTypes"
+              v-for="(inputType,index) in inputTypesList.data"
               :key="index"
               :value="inputType.data.id"
               v-text="inputType.data.display_name"
@@ -29,7 +30,7 @@
       </div>
     </div>
 
-    <span v-if="!withDescription && question.subtext == null">
+    <span v-if="!withDescription && question.data.subtext == null">
       <a
         @click.prevent="withDescription = !withDescription"
         class="-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer"
@@ -44,7 +45,7 @@
       >Descripción <span class="text-gray-600 lowercase">(opcional)</span></label>
       <input
         type="text"
-        :value="question.subtext"
+        :value="question.data.subtext"
         id="subtext"
         class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
       />
@@ -53,21 +54,24 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: "QuestionEditItem",
   props: {
     question: {
       type: Object,
       required: true
-    },
-    inputTypes: {
-      type: Array,
-      required: true
     }
+  },
+  computed: {
+    ...mapGetters('InputType', ["inputTypesList"])
   },
   data() {
     return {
-      withDescription: false
+      withDescription: false,
+      inputTypeId: this.question.data.input_type.data.id || 0
     }
   }
 };

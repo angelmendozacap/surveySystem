@@ -19,11 +19,11 @@
       </button>
     </div>
 
-    <div v-if="!questionsList.length" class="p-4 mb-5 rounded bg-white shadow">
+    <div v-if="!questionsList" class="p-4 mb-5 rounded bg-white shadow">
       <p class="text-red-500 text-center font-medium">No se encontraron preguntas</p>
     </div>
     <div v-else class="mb-5 rounded bg-white shadow">
-      <QuestionEditItem v-for="(question, index) in questionsList" :key="index" :question="question" />
+      <QuestionEditItem v-for="(question, index) in questionsList.data" :key="index" :question="question" />
     </div>
 
   </section>
@@ -42,7 +42,8 @@ export default {
   },
   methods: {
     ...mapActions("Survey", ["getSurvey"]),
-    ...mapActions("Question", ["getQuestions", "createQuestion"])
+    ...mapActions("Question", ["getQuestions", "createQuestion"]),
+    ...mapActions("InputType", ["getInputTypes"])
   },
   computed: {
     ...mapGetters("Survey", ["surveyItem"]),
@@ -53,6 +54,7 @@ export default {
 
     this.getSurvey(surveyId);
     this.getQuestions(surveyId);
+    this.getInputTypes()
   }
 };
 </script>

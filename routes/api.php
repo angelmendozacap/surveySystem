@@ -21,5 +21,8 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/option-groups/{group}', 'OptionGroupsController@update');
     Route::delete('/option-groups/{group}', 'OptionGroupsController@destroy');
 
-    Route::post('/surveys/{survey}/answers', 'AnswersController@store');
+    Route::get('/questions/{question}/answers', 'AnswersController@index');
+    Route::post('/questions/{question}/answers', 'AnswersController@store');
+    Route::patch('/answers/{answer}', 'AnswersController@update');
+    Route::delete('/answers/{answer}', 'AnswersController@destroy');
 });

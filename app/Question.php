@@ -38,4 +38,9 @@ class Question extends Model
     {
         return $this->belongsTo(OptionGroup::class);
     }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }

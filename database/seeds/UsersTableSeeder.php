@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     {
         $role = Role::where('name', 'admin')->firstOrFail();
 
-        $user = User::create([
+        $user = factory(User::class)->create([
             'name' => 'Alfredo Mendoza',
             'email' => '1930.kick@gmail.com',
             'role_id' => $role->id

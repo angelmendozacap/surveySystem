@@ -6,6 +6,7 @@ use App\User;
 use App\Answer;
 use App\Survey;
 use App\Question;
+use App\InputType;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,129 +16,184 @@ class AnswersTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function text_questions_can_be_answered()
+    protected $user;
+    protected $survey;
+    protected $inputType;
+    protected $question;
+
+    protected function setUp(): void
     {
-        // $this->withoutExceptionHandling();
+        parent::setUp();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
-
-        $survey = factory(Survey::class)->create();
-        $questionOne = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
+        $this->user = factory(User::class)->create();
+        $this->survey = factory(Survey::class)->create();
+        $this->inputType = factory(InputType::class)->create([
+            'type' => 'radio',
+            'display_name' => 'Opción Multiple'
         ]);
 
-        $questionTwo = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
+        $this->question = factory(Question::class)->create([
+            'survey_id' => $this->survey->id,
+            'input_type_id' => $this->inputType->id
         ]);
-
-        $questionThree = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-        ]);
-
-        $questionFour = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
-        ]);
-
-        $answers = [];
-
-        foreach ($survey->questions as $question) {
-            $answers[$question->code_name_input] = "Hola tildación {$question->id}";
-        }
-
-        $response = $this->post("/api/surveys/{$survey->id}/answers", $answers);
-        $response->assertStatus(Response::HTTP_CREATED);
-
-        $this->assertCount(1, Answer::all());
     }
 
     /** @test */
-    public function text_questions_answers_must_be_required()
+    public function a_list_of_answer_can_be_retrieved_by_its_question()
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $this->actingAs($this->user, 'api');
 
-        $survey = factory(Survey::class)->create();
-        $questionOne = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
+        $answers = factory(Answer::class, 2)->create([
+            'question_id' => $this->question->id
         ]);
 
-        $questionTwo = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
+        $response = $this->get("/api/questions/{$this->question->id}/answers");
+
+        $response->assertJsonCount(1)->assertJson([
+            'data' => [
+                [
+                    'data' => [
+                        'answer_id' => $answers->first()->id,
+                        'answer' => $answers->first()->answer,
+                        'question' => [
+                            'data' => [
+                                'question_id' => $this->question->id
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'data' => [
+                        'answer_id' => $answers->last()->id,
+                        'answer' => $answers->last()->answer,
+                        'question' => [
+                            'data' => [
+                                'question_id' => $this->question->id
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ]);
 
-        $questionThree = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
+        $this->assertCount(2, Answer::all());
+    }
+
+    /** @test */
+    public function an_answer_can_be_created_by_its_question()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->post("/api/questions/{$this->question->id}/answers");
+
+        $answer = Answer::first();
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $response->assertJson([
+            'data' => [
+                'answer_id' => $answer->id,
+                'answer' => $answer->answer,
+                'question' => [
+                    'data' => [
+                        'question_id' => $this->question->id,
+                        'input_type' => [
+                            'data' => [
+                                'id' => $this->inputType->id
+                            ]
+                        ]
+                    ]
+                ],
+                'created_at' => $answer->created_at->diffForHumans(),
+                'updated_at' => $answer->updated_at->diffForHumans()
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function an_answer_can_be_patched()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+
+        $answer = factory(Answer::class)->create([
+            'question_id' => $this->question->id
         ]);
 
-        $questionFour = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
+        $response = $this->patch('/api/answers/'.$answer->id, $this->data());
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $answer = $answer->fresh();
+
+        $this->assertEquals($this->question->id, $answer->question_id);
+        $this->assertEquals('Choice 1', $answer->answer);
+
+        $response->assertJson([
+            'data' => [
+                'answer_id' => $answer->id,
+                'answer' => $answer->answer,
+                'question' => [
+                    'data' => [
+                        'question_id' => $this->question->id,
+                        'input_type' => [
+                            'data' => [
+                                'id' => $this->inputType->id
+                            ]
+                        ]
+                    ]
+                ],
+                'created_at' => $answer->created_at->diffForHumans(),
+                'updated_at' => $answer->updated_at->diffForHumans()
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function answer_is_required_when_updating()
+    {
+
+        $this->actingAs($this->user, 'api');
+
+        $answer = factory(Answer::class)->create([
+            'question_id' => $this->question->id
         ]);
 
-        $answers = [];
+        $response = $this->patch('/api/answers/'.$answer->id,
+            array_merge($this->data(), ['answer' => '']));
 
-        foreach ($survey->questions as $question) {
-            $answers[$question->code_name_input] = "";
-        }
 
-        $response = $this->post("/api/surveys/{$survey->id}/answers", $answers);
-        $response->assertSessionHasErrors(['s1_q1', 's1_q2', 's1_q3', 's1_q4']);
+        $response->assertSessionHasErrors('answer');
+        $this->assertNotEquals('Nueva Opción', $answer->answer);
+    }
 
+    /** @test */
+    public function an_answer_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+
+        $answer = factory(Answer::class)->create([
+            'question_id' => $this->question->id
+        ]);
+
+        $response = $this->delete('/api/answers/'.$answer->id);
+
+        $response->assertStatus(Response::HTTP_OK);
 
         $this->assertCount(0, Answer::all());
     }
 
-    /** @test */
-    public function radio_questions_can_be_asnwered()
+    private function data()
     {
-        $this->actingAs($user = factory(User::class)->create(), 'api');
-
-        $survey = factory(Survey::class)->create();
-        $questionOne = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
-        ]);
-
-        $questionTwo = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
-        ]);
-
-        $questionThree = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
-        ]);
-
-        $questionFour = factory(Question::class)->create([
-            'survey_id' => $survey->id,
-            'input_type_id' => 'text',
-            'is_required' => true
-        ]);
-
-        $answers = [];
-
-        foreach ($survey->questions as $question) {
-            $answers[$question->code_name_input] = "";
-        }
-
-        $response = $this->post("/api/surveys/{$survey->id}/answers", $answers);
+        return [
+            'answer' => 'Choice 1'
+        ];
     }
 }

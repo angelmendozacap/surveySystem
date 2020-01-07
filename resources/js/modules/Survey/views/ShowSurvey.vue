@@ -2,7 +2,7 @@
   <section class="p-4" v-if="surveyItem">
     <div class="p-4 mb-5 rounded bg-white shadow-lg sticky top-0 z-10">
       <div class="flex items-center justify-between">
-        <h1 class="text-3xl text-left text-blue-500">Encuesta | {{ surveyItem.data.survey_name }}</h1>
+        <h1 class="text-3xl leading-tight text-left text-blue-500">Encuesta | {{ surveyItem.data.survey_name }}</h1>
         <button class="py-1 px-2 text-sm bg-green-500 text-white rounded hover:bg-green-400">Habilitar Encuesta</button>
       </div>
 
@@ -19,7 +19,7 @@
       </button>
     </div>
 
-    <div v-if="!questionsList" class="p-4 mb-5 rounded bg-white shadow">
+    <div v-if="!questionsList || !questionsList.data.length" class="p-4 mb-5 rounded bg-white shadow">
       <p class="text-red-500 text-center font-medium">No se encontraron preguntas</p>
     </div>
     <div v-else class="mb-5 rounded bg-white shadow">

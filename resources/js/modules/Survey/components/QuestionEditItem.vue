@@ -14,6 +14,10 @@
           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
           placeholder="Pregunta"
         />
+
+        <p v-if="errorsList && errorsList['name'] && questionData.name == ''" class="mt-1 text-red-500 text-sm">
+          <span>Pregunta Requerida</span>
+        </p>
       </div>
 
       <div class="w-1/2 px-2">
@@ -41,6 +45,10 @@
             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
           </div>
         </div>
+
+        <p v-if="errorsList && errorsList['input_type_id'] && questionData.input_type_id == 0" class="mt-1 text-red-500 text-sm">
+          <span>Campo Requerido</span>
+        </p>
       </div>
     </div>
 
@@ -114,6 +122,7 @@ export default {
   },
   methods: {
     ...mapActions('Question', ['deleteQuestion', 'updateQuestion']),
+
     saveQuestion: _.debounce(function () {
       const data = {
         questionId: this.question.data.question_id,
@@ -125,6 +134,8 @@ export default {
   },
   computed: {
     ...mapGetters('InputType', ["inputTypesList"]),
+    ...mapGetters('Question', ["errorsList"]),
+
     currentInputType() {
       let inputType = 'radio'
       if (this.inputTypesList) {

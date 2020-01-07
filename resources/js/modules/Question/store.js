@@ -13,6 +13,9 @@ export const QuestionStore = {
   getters: {
     questionsList(state) {
       return state.questions
+    },
+    errorsList(state) {
+      return state.errors
     }
   },
   actions: {
@@ -25,9 +28,15 @@ export const QuestionStore = {
       commit(CREATE_QUESTION, res.data)
     },
     updateQuestion: async ({ commit }, payload) => {
-      const { questionId, question } = payload
-      const res = await axios.patch(`/api/questions/${questionId}`, question)
-      commit(UPDATE_QUESTION, res.data)
+      try {
+        const { questionId, question } = payload
+        const res = await axios.patch(`/api/questions/${questionId}`, question)
+
+        commit(UPDATE_QUESTION, res.data)
+        commit(SET_ERRORS, null)
+      } catch (err) {
+        commit(SET_ERRORS, err.response.data.errors)
+      }
     },
     deleteQuestion: async ({ commit }, questionId) => {
       try {

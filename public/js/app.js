@@ -2405,6 +2405,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 // InputTypes
 
 
@@ -2448,7 +2456,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.updateQuestion(data);
     }, 1000)
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('InputType', ["inputTypesList"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('InputType', ["inputTypesList"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('Question', ["errorsList"]), {
     currentInputType: function currentInputType() {
       var _this = this;
 
@@ -22809,7 +22817,15 @@ var render = function() {
                 _vm.saveQuestion
               ]
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.errorsList &&
+          _vm.errorsList["name"] &&
+          _vm.questionData.name == ""
+            ? _c("p", { staticClass: "mt-1 text-red-500 text-sm" }, [
+                _c("span", [_vm._v("Pregunta Requerida")])
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "w-1/2 px-2" }, [
@@ -22909,6 +22925,14 @@ var render = function() {
                     )
                   ]
                 )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errorsList &&
+          _vm.errorsList["input_type_id"] &&
+          _vm.questionData.input_type_id == 0
+            ? _c("p", { staticClass: "mt-1 text-red-500 text-sm" }, [
+                _c("span", [_vm._v("Campo Requerido")])
               ])
             : _vm._e()
         ])
@@ -40280,6 +40304,9 @@ var QuestionStore = {
   getters: {
     questionsList: function questionsList(state) {
       return state.questions;
+    },
+    errorsList: function errorsList(state) {
+      return state.errors;
     }
   },
   actions: {
@@ -40355,20 +40382,29 @@ var QuestionStore = {
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref3.commit;
+                _context3.prev = 1;
                 questionId = payload.questionId, question = payload.question;
-                _context3.next = 4;
+                _context3.next = 5;
                 return axios.patch("/api/questions/".concat(questionId), question);
 
-              case 4:
+              case 5:
                 res = _context3.sent;
                 commit(UPDATE_QUESTION, res.data);
+                commit(SET_ERRORS, null);
+                _context3.next = 13;
+                break;
 
-              case 6:
+              case 10:
+                _context3.prev = 10;
+                _context3.t0 = _context3["catch"](1);
+                commit(SET_ERRORS, _context3.t0.response.data.errors);
+
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[1, 10]]);
       }));
 
       function updateQuestion(_x5, _x6) {

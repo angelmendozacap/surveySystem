@@ -1,6 +1,7 @@
 export const SET_QUESTIONS = 'question/SET_QUESTIONS'
 export const CREATE_QUESTION = 'question/CREATE_QUESTION'
 export const DELETE_QUESTION = 'question/DELETE_QUESTION'
+export const UPDATE_QUESTION = 'question/UPDATE_QUESTION'
 export const SET_ERRORS = 'question/SET_ERRORS'
 
 export const QuestionStore = {
@@ -23,6 +24,11 @@ export const QuestionStore = {
       const res = await axios.post(`/api/surveys/${surveyId}/questions`)
       commit(CREATE_QUESTION, res.data)
     },
+    updateQuestion: async ({ commit }, payload) => {
+      const { questionId, question } = payload
+      const res = await axios.patch(`/api/questions/${questionId}`, question)
+      commit(UPDATE_QUESTION, res.data)
+    },
     deleteQuestion: async ({ commit }, questionId) => {
       try {
         await axios.delete(`/api/questions/${questionId}`)
@@ -44,6 +50,15 @@ export const QuestionStore = {
     [DELETE_QUESTION](state, payload) {
       const questionIdDeleted = parseInt(payload)
       state.questions.data = state.questions.data.filter(question => question.data.question_id !== questionIdDeleted)
+    },
+    [UPDATE_QUESTION](state, payload) {
+      const newState = state.questions.data.map(question => {
+        if (question.data.id === payload.data.id) question = payload
+
+        return question
+      })
+
+      state.questions.data = newState
     },
     [SET_ERRORS](state, payload) {
       state.errors = payload

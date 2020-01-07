@@ -1,81 +1,76 @@
 <template>
   <article class="question-item px-4 pt-8 pb-4 border-b border-gray-500 relative">
-    <form @submit.prevent="saveQuestion">
-      <div class="flex -mx-2 mb-4">
-        <div class="w-1/2 px-2">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            :for="`${question.data.code_name}_name`"
-          >Pregunta</label>
-          <input
-            type="text"
-            :value="'¿'+question.data.name+'?'"
-            :id="`${question.data.code_name}_name`"
-            name="question[name]"
-            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
-            placeholder="Pregunta"
-          />
-        </div>
-
-        <div class="w-1/2 px-2">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            :for="`${question.data.code_name}_input_type_id`"
-          >Tipo de Pregunta</label>
-          <div v-if="inputTypesList" class="relative">
-            <select
-              class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
-              v-model="inputTypeId"
-              name="question[input_type_id]"
-              :id="`${question.data.code_name}_input_type_id`"
-            >
-              <option value="0" disabled>Seleccione una Opción</option>
-              <option
-                v-for="(inputType,index) in inputTypesList.data"
-                :key="index"
-                :value="inputType.data.id"
-                v-text="inputType.data.display_name"
-              ></option>
-            </select>
-
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <span v-if="!withDescription && question.data.subtext == null">
-        <a
-          @click.prevent="withDescription = !withDescription"
-          class="-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer"
-        >
-          Agregar Descripción (opcional)
-        </a>
-      </span>
-      <div v-else class="w-full mb-4">
+    <div class="flex -mx-2 mb-4">
+      <div class="w-1/2 px-2">
         <label
           class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          :for="`${question.data.code_name}_subtext`"
-        >Descripción <span class="text-gray-600 lowercase">(opcional)</span></label>
+          :for="`${question.data.code_name}_name`"
+        >Pregunta</label>
         <input
           type="text"
-          :value="question.data.subtext"
-          name="question[subtext]"
-          :id="`${question.data.code_name}_subtext`"
+          v-model="questionData.name"
+          :id="`${question.data.code_name}_name`"
+          @input="saveQuestion"
           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
+          placeholder="Pregunta"
         />
       </div>
 
-      <div class="w-full my-4">
-        <component :is="currentInputType" :questionCode="question.data.code_name" />
-      </div>
+      <div class="w-1/2 px-2">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          :for="`${question.data.code_name}_input_type_id`"
+        >Tipo de Pregunta</label>
+        <div v-if="inputTypesList" class="relative">
+          <select
+            class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline"
+            v-model="questionData.input_type_id"
+            @change="saveQuestion"
+            :id="`${question.data.code_name}_input_type_id`"
+          >
+            <option value="0" disabled>Seleccione una Opción</option>
+            <option
+              v-for="(inputType,index) in inputTypesList.data"
+              :key="index"
+              :value="inputType.data.id"
+              v-text="inputType.data.display_name"
+            ></option>
+          </select>
 
-      <div class="absolute top-0 right-0 flex">
-        <button type="submit" class="question-item__btn px-2 py-1 text-sm bg-blue-500 text-white hover:bg-blue-400 uppercase">Guardar</button>
-        <button @click="deleteQuestion(question.data.question_id)" class="question-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase">Borrar</button>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
+
+    <span v-if="!withDescription && question.data.subtext == null">
+      <a
+        @click.prevent="withDescription = !withDescription"
+        class="-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer"
+      >
+        Agregar Descripción (opcional)
+      </a>
+    </span>
+    <div v-else class="w-full mb-4">
+      <label
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        :for="`${question.data.code_name}_subtext`"
+      >Descripción <span class="text-gray-600 lowercase">(opcional)</span></label>
+      <input
+        type="text"
+        v-model="questionData.subtext"
+        @input="saveQuestion"
+        :id="`${question.data.code_name}_subtext`"
+        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent"
+      />
+    </div>
+
+    <div class="w-full my-4">
+      <component :is="currentInputType" :questionCode="question.data.code_name" />
+    </div>
+
+    <button @click="deleteQuestion(question.data.question_id)" class="question-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0">Borrar</button>
   </article>
 </template>
 
@@ -88,6 +83,7 @@ import CheckBoxInput from '../components/InputTypes/CheckBox'
 import TextArea from '../components/InputTypes/TextArea'
 import Select from '../components/InputTypes/Select'
 
+import _ from 'lodash'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -107,47 +103,32 @@ export default {
   },
   data() {
     return {
+      questionData: {
+        name: this.question.data.name,
+        subtext: this.question.data.subtext,
+        input_type_id: this.question.data.input_type.data.id,
+        is_required: this.question.data.is_required,
+      },
       withDescription: false,
-      inputTypeId: this.question.data.input_type.data.id || 0,
     }
   },
   methods: {
-    ...mapActions('Question', ['deleteQuestion']),
-    saveQuestion(e) {
-      const name = e.target.elements['question[name]'].value,
-        input_type_id = e.target.elements['question[input_type_id]'].value,
-        subtext = e.target.elements['question[subtext]'],
-        answers = e.target.elements['answers[][answer]']
-
-      const answersValues = []
-
-      for (let i = 0; i < answers.length; i++) {
-        const answer = {
-          answer: answers[i].value
-        }
-
-        answersValues.push(answer)
-      }
-
+    ...mapActions('Question', ['deleteQuestion', 'updateQuestion']),
+    saveQuestion: _.debounce(function () {
       const data = {
-        question: {
-          name,
-          input_type_id,
-          subtext: subtext !== undefined ? subtext.value : null
-        },
-        answers: answersValues
+        questionId: this.question.data.question_id,
+        question: this.questionData
       }
 
-      console.log(data)
-    }
+      this.updateQuestion(data)
+    }, 1000)
   },
   computed: {
     ...mapGetters('InputType', ["inputTypesList"]),
     currentInputType() {
       let inputType = 'radio'
       if (this.inputTypesList) {
-        const currentInputType = this.inputTypesList.data.find(inputType => inputType.data.id == this.inputTypeId)
-
+        const currentInputType = this.inputTypesList.data.find(inputType => inputType.data.id == this.questionData.input_type_id)
         inputType = currentInputType.data.type.toLowerCase()
       }
 

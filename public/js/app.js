@@ -2320,18 +2320,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_InputTypes_CheckBox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/InputTypes/CheckBox */ "./resources/js/modules/Survey/components/InputTypes/CheckBox.vue");
 /* harmony import */ var _components_InputTypes_TextArea__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/InputTypes/TextArea */ "./resources/js/modules/Survey/components/InputTypes/TextArea.vue");
 /* harmony import */ var _components_InputTypes_Select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/InputTypes/Select */ "./resources/js/modules/Survey/components/InputTypes/Select.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2415,6 +2412,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "QuestionEditItem",
   props: {
@@ -2432,37 +2430,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      withDescription: false,
-      inputTypeId: this.question.data.input_type.data.id || 0
+      questionData: {
+        name: this.question.data.name,
+        subtext: this.question.data.subtext,
+        input_type_id: this.question.data.input_type.data.id,
+        is_required: this.question.data.is_required
+      },
+      withDescription: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])('Question', ['deleteQuestion']), {
-    saveQuestion: function saveQuestion(e) {
-      var name = e.target.elements['question[name]'].value,
-          input_type_id = e.target.elements['question[input_type_id]'].value,
-          subtext = e.target.elements['question[subtext]'],
-          answers = e.target.elements['answers[][answer]'];
-      var answersValues = [];
-
-      for (var i = 0; i < answers.length; i++) {
-        var answer = {
-          answer: answers[i].value
-        };
-        answersValues.push(answer);
-      }
-
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapActions"])('Question', ['deleteQuestion', 'updateQuestion']), {
+    saveQuestion: lodash__WEBPACK_IMPORTED_MODULE_5___default.a.debounce(function () {
       var data = {
-        question: {
-          name: name,
-          input_type_id: input_type_id,
-          subtext: subtext !== undefined ? subtext.value : null
-        },
-        answers: answersValues
+        questionId: this.question.data.question_id,
+        question: this.questionData
       };
-      console.log(data);
-    }
+      this.updateQuestion(data);
+    }, 1000)
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])('InputType', ["inputTypesList"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('InputType', ["inputTypesList"]), {
     currentInputType: function currentInputType() {
       var _this = this;
 
@@ -2470,7 +2456,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.inputTypesList) {
         var currentInputType = this.inputTypesList.data.find(function (inputType) {
-          return inputType.data.id == _this.inputTypeId;
+          return inputType.data.id == _this.questionData.input_type_id;
         });
         inputType = currentInputType.data.type.toLowerCase();
       }
@@ -22783,224 +22769,238 @@ var render = function() {
         "question-item px-4 pt-8 pb-4 border-b border-gray-500 relative"
     },
     [
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.saveQuestion($event)
+      _c("div", { staticClass: "flex -mx-2 mb-4" }, [
+        _c("div", { staticClass: "w-1/2 px-2" }, [
+          _c(
+            "label",
+            {
+              staticClass:
+                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+              attrs: { for: _vm.question.data.code_name + "_name" }
+            },
+            [_vm._v("Pregunta")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.questionData.name,
+                expression: "questionData.name"
+              }
+            ],
+            staticClass:
+              "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
+            attrs: {
+              type: "text",
+              id: _vm.question.data.code_name + "_name",
+              placeholder: "Pregunta"
+            },
+            domProps: { value: _vm.questionData.name },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.questionData, "name", $event.target.value)
+                },
+                _vm.saveQuestion
+              ]
             }
-          }
-        },
-        [
-          _c("div", { staticClass: "flex -mx-2 mb-4" }, [
-            _c("div", { staticClass: "w-1/2 px-2" }, [
-              _c(
-                "label",
-                {
-                  staticClass:
-                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                  attrs: { for: _vm.question.data.code_name + "_name" }
-                },
-                [_vm._v("Pregunta")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                staticClass:
-                  "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
-                attrs: {
-                  type: "text",
-                  id: _vm.question.data.code_name + "_name",
-                  name: "question[name]",
-                  placeholder: "Pregunta"
-                },
-                domProps: { value: "¿" + _vm.question.data.name + "?" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-1/2 px-2" }, [
-              _c(
-                "label",
-                {
-                  staticClass:
-                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                  attrs: { for: _vm.question.data.code_name + "_input_type_id" }
-                },
-                [_vm._v("Tipo de Pregunta")]
-              ),
-              _vm._v(" "),
-              _vm.inputTypesList
-                ? _c("div", { staticClass: "relative" }, [
-                    _c(
-                      "select",
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/2 px-2" }, [
+          _c(
+            "label",
+            {
+              staticClass:
+                "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+              attrs: { for: _vm.question.data.code_name + "_input_type_id" }
+            },
+            [_vm._v("Tipo de Pregunta")]
+          ),
+          _vm._v(" "),
+          _vm.inputTypesList
+            ? _c("div", { staticClass: "relative" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.inputTypeId,
-                            expression: "inputTypeId"
-                          }
-                        ],
-                        staticClass:
-                          "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline",
-                        attrs: {
-                          name: "question[input_type_id]",
-                          id: _vm.question.data.code_name + "_input_type_id"
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.inputTypeId = $event.target.multiple
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.questionData.input_type_id,
+                        expression: "questionData.input_type_id"
+                      }
+                    ],
+                    staticClass:
+                      "block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline",
+                    attrs: {
+                      id: _vm.question.data.code_name + "_input_type_id"
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.questionData,
+                            "input_type_id",
+                            $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
-                          }
+                          )
+                        },
+                        _vm.saveQuestion
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0", disabled: "" } }, [
+                      _vm._v("Seleccione una Opción")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.inputTypesList.data, function(inputType, index) {
+                      return _c("option", {
+                        key: index,
+                        domProps: {
+                          value: inputType.data.id,
+                          textContent: _vm._s(inputType.data.display_name)
+                        }
+                      })
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "fill-current h-4 w-4",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20"
                         }
                       },
                       [
-                        _c("option", { attrs: { value: "0", disabled: "" } }, [
-                          _vm._v("Seleccione una Opción")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.inputTypesList.data, function(
-                          inputType,
-                          index
-                        ) {
-                          return _c("option", {
-                            key: index,
-                            domProps: {
-                              value: inputType.data.id,
-                              textContent: _vm._s(inputType.data.display_name)
-                            }
-                          })
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                          }
                         })
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                      },
-                      [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "fill-current h-4 w-4",
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              viewBox: "0 0 20 20"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                              }
-                            })
-                          ]
-                        )
                       ]
                     )
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          !_vm.withDescription && _vm.question.data.subtext == null
-            ? _c("span", [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.withDescription = !_vm.withDescription
-                      }
-                    }
-                  },
-                  [_vm._v("\n        Agregar Descripción (opcional)\n      ")]
+                  ]
                 )
               ])
-            : _c("div", { staticClass: "w-full mb-4" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass:
-                      "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                    attrs: { for: _vm.question.data.code_name + "_subtext" }
-                  },
-                  [
-                    _vm._v("Descripción "),
-                    _c("span", { staticClass: "text-gray-600 lowercase" }, [
-                      _vm._v("(opcional)")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass:
-                    "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
-                  attrs: {
-                    type: "text",
-                    name: "question[subtext]",
-                    id: _vm.question.data.code_name + "_subtext"
-                  },
-                  domProps: { value: _vm.question.data.subtext }
-                })
-              ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "w-full my-4" },
-            [
-              _c(_vm.currentInputType, {
-                tag: "component",
-                attrs: { questionCode: _vm.question.data.code_name }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "absolute top-0 right-0 flex" }, [
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      !_vm.withDescription && _vm.question.data.subtext == null
+        ? _c("span", [
             _c(
-              "button",
+              "a",
               {
                 staticClass:
-                  "question-item__btn px-2 py-1 text-sm bg-blue-500 text-white hover:bg-blue-400 uppercase",
-                attrs: { type: "submit" }
-              },
-              [_vm._v("Guardar")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "question-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase",
+                  "-mt-3 text-sm text-blue-400 underline hover:text-blue-500 hover:no-underline cursor-pointer",
                 on: {
                   click: function($event) {
-                    return _vm.deleteQuestion(_vm.question.data.question_id)
+                    $event.preventDefault()
+                    _vm.withDescription = !_vm.withDescription
                   }
                 }
               },
-              [_vm._v("Borrar")]
+              [_vm._v("\n      Agregar Descripción (opcional)\n    ")]
             )
           ])
-        ]
+        : _c("div", { staticClass: "w-full mb-4" }, [
+            _c(
+              "label",
+              {
+                staticClass:
+                  "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                attrs: { for: _vm.question.data.code_name + "_subtext" }
+              },
+              [
+                _vm._v("Descripción "),
+                _c("span", { staticClass: "text-gray-600 lowercase" }, [
+                  _vm._v("(opcional)")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.questionData.subtext,
+                  expression: "questionData.subtext"
+                }
+              ],
+              staticClass:
+                "bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-accent",
+              attrs: {
+                type: "text",
+                id: _vm.question.data.code_name + "_subtext"
+              },
+              domProps: { value: _vm.questionData.subtext },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.questionData, "subtext", $event.target.value)
+                  },
+                  _vm.saveQuestion
+                ]
+              }
+            })
+          ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "w-full my-4" },
+        [
+          _c(_vm.currentInputType, {
+            tag: "component",
+            attrs: { questionCode: _vm.question.data.code_name }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass:
+            "question-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0",
+          on: {
+            click: function($event) {
+              return _vm.deleteQuestion(_vm.question.data.question_id)
+            }
+          }
+        },
+        [_vm._v("Borrar")]
       )
     ]
   )
@@ -40243,7 +40243,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************!*\
   !*** ./resources/js/modules/Question/store.js ***!
   \************************************************/
-/*! exports provided: SET_QUESTIONS, CREATE_QUESTION, DELETE_QUESTION, SET_ERRORS, QuestionStore */
+/*! exports provided: SET_QUESTIONS, CREATE_QUESTION, DELETE_QUESTION, UPDATE_QUESTION, SET_ERRORS, QuestionStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40251,6 +40251,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_QUESTIONS", function() { return SET_QUESTIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_QUESTION", function() { return CREATE_QUESTION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_QUESTION", function() { return DELETE_QUESTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_QUESTION", function() { return UPDATE_QUESTION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_ERRORS", function() { return SET_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionStore", function() { return QuestionStore; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -40268,6 +40269,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var SET_QUESTIONS = 'question/SET_QUESTIONS';
 var CREATE_QUESTION = 'question/CREATE_QUESTION';
 var DELETE_QUESTION = 'question/DELETE_QUESTION';
+var UPDATE_QUESTION = 'question/UPDATE_QUESTION';
 var SET_ERRORS = 'question/SET_ERRORS';
 var QuestionStore = {
   namespaced: true,
@@ -40343,42 +40345,74 @@ var QuestionStore = {
 
       return createQuestion;
     }(),
-    deleteQuestion: function () {
-      var _deleteQuestion = _asyncToGenerator(
+    updateQuestion: function () {
+      var _updateQuestion = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, questionId) {
-        var commit;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, payload) {
+        var commit, questionId, question, res;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref3.commit;
-                _context3.prev = 1;
+                questionId = payload.questionId, question = payload.question;
                 _context3.next = 4;
+                return axios.patch("/api/questions/".concat(questionId), question);
+
+              case 4:
+                res = _context3.sent;
+                commit(UPDATE_QUESTION, res.data);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function updateQuestion(_x5, _x6) {
+        return _updateQuestion.apply(this, arguments);
+      }
+
+      return updateQuestion;
+    }(),
+    deleteQuestion: function () {
+      var _deleteQuestion = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref4, questionId) {
+        var commit;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref4.commit;
+                _context4.prev = 1;
+                _context4.next = 4;
                 return axios["delete"]("/api/questions/".concat(questionId));
 
               case 4:
                 commit(DELETE_QUESTION, questionId);
-                _context3.next = 10;
+                _context4.next = 10;
                 break;
 
               case 7:
-                _context3.prev = 7;
-                _context3.t0 = _context3["catch"](1);
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](1);
 
-                if (_context3.t0.response.status === 404) {
+                if (_context4.t0.response.status === 404) {
                   console.error('No se encontró la pregunta');
                 }
 
               case 10:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, null, [[1, 7]]);
+        }, _callee4, null, [[1, 7]]);
       }));
 
-      function deleteQuestion(_x5, _x6) {
+      function deleteQuestion(_x7, _x8) {
         return _deleteQuestion.apply(this, arguments);
       }
 
@@ -40394,6 +40428,12 @@ var QuestionStore = {
     state.questions.data = state.questions.data.filter(function (question) {
       return question.data.question_id !== questionIdDeleted;
     });
+  }), _defineProperty(_mutations, UPDATE_QUESTION, function (state, payload) {
+    var newState = state.questions.data.map(function (question) {
+      if (question.data.id === payload.data.id) question = payload;
+      return question;
+    });
+    state.questions.data = newState;
   }), _defineProperty(_mutations, SET_ERRORS, function (state, payload) {
     state.errors = payload;
   }), _mutations)

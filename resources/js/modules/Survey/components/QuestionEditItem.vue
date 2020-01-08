@@ -75,7 +75,7 @@
     </div>
 
     <div class="w-full my-4">
-      <component :is="currentInputType" :questionCode="question.data.code_name" />
+      <component :is="currentInputType" :key="question.data.code_name" :questionCode="question.data.code_name" :questionId="question.data.question_id" />
     </div>
 
     <button @click="deleteQuestion(question.data.question_id)" class="question-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0">Borrar</button>

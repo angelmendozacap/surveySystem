@@ -77,6 +77,7 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        $question->answers()->delete();
         $question->delete();
         return response([], Response::HTTP_OK);
     }

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use App\Answer;
 use App\Survey;
 use App\Question;
 use App\InputType;
@@ -214,10 +215,16 @@ class QuestionsTest extends TestCase
         $this->actingAs($user = factory(User::class)->create(), 'api');
 
         $question = factory(Question::class)->create();
+
+        $answers = factory(Answer::class, 4)->create([
+            'question_id' => $question->id
+        ]);
+
         $response = $this->delete("/api/questions/{$question->id}");
 
         $response->assertStatus(Response::HTTP_OK);
 
+        $this->assertCount(0, Answer::all());
         $this->assertCount(0, Question::all());
     }
 

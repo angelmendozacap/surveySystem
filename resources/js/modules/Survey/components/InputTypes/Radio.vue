@@ -2,7 +2,7 @@
   <fieldset class="choices border-2 rounded-lg p-4 relative">
     <legend class="text-gray-700 font-bold">Opciones</legend>
 
-    <div v-if="!answers || !answers.data.length" class="p-4 mb-5 rounded bg-white shadow">
+    <div v-if="!answers || !answers.data.length" class="p-4 mb-5">
       <p class="text-red-500 text-center font-medium">No se encontraron opciones.</p>
     </div>
     <div v-else>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <button @click="addAnswer(questionId)" class="choices__btn-add w-8 h-8 rounded-full text-center font-bold text-xl text-white bg-green-500 border-2 border-gray-400 absolute top-0 right-0 outline-none">+</button>
+    <button @click="addAnswer(questionId)" class="choices__btn-add w-8 h-8 rounded-full text-center font-bold text-xl text-white bg-green-500 hover:bg-green-400 border-2 border-gray-400 absolute top-0 right-0 outline-none">+</button>
   </fieldset>
 </template>
 
@@ -59,8 +59,7 @@ export default {
     },
     changeAnswer: _.debounce(async function (e, answerId) {
       if (!e.target.value) {
-        this.deleteAnswer(answerId)
-        this.answers.data = this.answers.data.filter(answer => answer.data.answer_id != answerId)
+        this.removeAnswer(answerId)
         return
       }
 
@@ -71,8 +70,22 @@ export default {
         }
       }
 
-      await this.updateAnswer(data)
-    }, 900)
+      const answer = await this.updateAnswer(data)
+      this.updateAnswers(answer)
+    }, 900),
+    updateAnswers(answerUpdated) {
+      const newAnswers = this.answers.data.map(answer => {
+        if (answer.data.answer_id === answerUpdated.data.answer_id) answer = answerUpdated
+
+        return answer
+      })
+
+      this.answers.data = newAnswers
+    },
+    removeAnswer(answerId) {
+      this.deleteAnswer(answerId)
+      this.answers.data = this.answers.data.filter(answer => answer.data.answer_id != answerId)
+    }
   },
   mounted() {
     this.getAllAnswers()
@@ -83,6 +96,7 @@ export default {
 <style lang="scss" scoped>
   .choices {
     &__btn-add {
+      margin-right: 1rem;
       opacity: 0;
       transform: scale(0);
       transition: all .3s;
@@ -91,7 +105,7 @@ export default {
 
     &:hover &__btn-add {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1.2);
     }
   }
 </style>

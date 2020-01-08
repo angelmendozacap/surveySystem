@@ -2338,33 +2338,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _ref = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e, answerId) {
-        var data;
+        var data, answer;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 if (e.target.value) {
-                  _context3.next = 4;
+                  _context3.next = 3;
                   break;
                 }
 
-                this.deleteAnswer(answerId);
-                this.answers.data = this.answers.data.filter(function (answer) {
-                  return answer.data.answer_id != answerId;
-                });
+                this.removeAnswer(answerId);
                 return _context3.abrupt("return");
 
-              case 4:
+              case 3:
                 data = {
                   answerId: answerId,
                   answer: {
                     answer: e.target.value
                   }
                 };
-                _context3.next = 7;
+                _context3.next = 6;
                 return this.updateAnswer(data);
 
-              case 7:
+              case 6:
+                answer = _context3.sent;
+                this.updateAnswers(answer);
+
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -2375,7 +2376,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return function (_x, _x2) {
         return _ref.apply(this, arguments);
       };
-    }(), 900)
+    }(), 900),
+    updateAnswers: function updateAnswers(answerUpdated) {
+      var newAnswers = this.answers.data.map(function (answer) {
+        if (answer.data.answer_id === answerUpdated.data.answer_id) answer = answerUpdated;
+        return answer;
+      });
+      this.answers.data = newAnswers;
+    },
+    removeAnswer: function removeAnswer(answerId) {
+      this.deleteAnswer(answerId);
+      this.answers.data = this.answers.data.filter(function (answer) {
+        return answer.data.answer_id != answerId;
+      });
+    }
   }),
   mounted: function mounted() {
     this.getAllAnswers();
@@ -2589,7 +2603,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         question: this.questionData
       };
       this.updateQuestion(data);
-    }, 1000)
+    }, 900)
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('InputType', ["inputTypesList"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_6__["mapGetters"])('Question', ["errorsList"]), {
     currentInputType: function currentInputType() {
@@ -2942,7 +2956,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, ".choices__btn-add[data-v-daa5baf6] {\n  opacity: 0;\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  -webkit-transition: all 0.3s;\n  transition: all 0.3s;\n  vertical-align: text-top;\n}\n.choices:hover .choices__btn-add[data-v-daa5baf6] {\n  opacity: 1;\n  -webkit-transform: scale(1);\n          transform: scale(1);\n}", ""]);
+exports.push([module.i, ".choices__btn-add[data-v-daa5baf6] {\n  margin-right: 1rem;\n  opacity: 0;\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  -webkit-transition: all 0.3s;\n  transition: all 0.3s;\n  vertical-align: text-top;\n}\n.choices:hover .choices__btn-add[data-v-daa5baf6] {\n  opacity: 1;\n  -webkit-transform: scale(1.2);\n          transform: scale(1.2);\n}", ""]);
 
 // exports
 
@@ -22728,7 +22742,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.answers || !_vm.answers.data.length
-        ? _c("div", { staticClass: "p-4 mb-5 rounded bg-white shadow" }, [
+        ? _c("div", { staticClass: "p-4 mb-5" }, [
             _c("p", { staticClass: "text-red-500 text-center font-medium" }, [
               _vm._v("No se encontraron opciones.")
             ])
@@ -22824,7 +22838,7 @@ var render = function() {
         "button",
         {
           staticClass:
-            "choices__btn-add w-8 h-8 rounded-full text-center font-bold text-xl text-white bg-green-500 border-2 border-gray-400 absolute top-0 right-0 outline-none",
+            "choices__btn-add w-8 h-8 rounded-full text-center font-bold text-xl text-white bg-green-500 hover:bg-green-400 border-2 border-gray-400 absolute top-0 right-0 outline-none",
           on: {
             click: function($event) {
               return _vm.addAnswer(_vm.questionId)

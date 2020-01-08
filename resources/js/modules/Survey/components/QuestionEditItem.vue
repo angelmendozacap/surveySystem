@@ -130,7 +130,7 @@ export default {
       }
 
       this.updateQuestion(data)
-    }, 1000)
+    }, 900)
   },
   computed: {
     ...mapGetters('InputType', ["inputTypesList"]),

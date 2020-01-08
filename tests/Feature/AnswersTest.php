@@ -49,28 +49,37 @@ class AnswersTest extends TestCase
             'question_id' => $this->question->id
         ]);
 
-        $response = $this->get("/api/questions/{$this->question->id}/answers");
+        $anotherQuestion = factory(Question::class)->create([
+            'survey_id' => $this->survey->id,
+            'input_type_id' => $this->inputType->id
+        ]);
+
+        $anotherAnswers = factory(Answer::class, 2)->create([
+            'question_id' => $anotherQuestion->id
+        ]);
+
+        $response = $this->get("/api/questions/{$anotherQuestion->id}/answers");
 
         $response->assertJsonCount(1)->assertJson([
             'data' => [
                 [
                     'data' => [
-                        'answer_id' => $answers->first()->id,
-                        'answer' => $answers->first()->answer,
+                        'answer_id' => $anotherAnswers->first()->id,
+                        'answer' => $anotherAnswers->first()->answer,
                         'question' => [
                             'data' => [
-                                'question_id' => $this->question->id
+                                'question_id' => $anotherQuestion->id
                             ]
                         ]
                     ]
                 ],
                 [
                     'data' => [
-                        'answer_id' => $answers->last()->id,
-                        'answer' => $answers->last()->answer,
+                        'answer_id' => $anotherAnswers->last()->id,
+                        'answer' => $anotherAnswers->last()->answer,
                         'question' => [
                             'data' => [
-                                'question_id' => $this->question->id
+                                'question_id' => $anotherQuestion->id
                             ]
                         ]
                     ]
@@ -78,7 +87,8 @@ class AnswersTest extends TestCase
             ]
         ]);
 
-        $this->assertCount(2, Answer::all());
+        $this->assertCount(2, Question::all());
+        $this->assertCount(4, Answer::all());
     }
 
     /** @test */

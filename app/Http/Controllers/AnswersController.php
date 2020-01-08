@@ -12,10 +12,9 @@ use App\Http\Resources\Answer as AnswerResource;
 
 class AnswersController extends Controller
 {
-    public function index()
+    public function index(Question $question)
     {
-        $answers = Answer::with('question.inputType')->get();
-
+        $answers = $question->answers->load('question.inputType');
         return AnswerResource::collection($answers);
     }
 

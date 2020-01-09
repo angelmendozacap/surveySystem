@@ -18,12 +18,12 @@ export const SurveysUserStore = {
   },
   actions: {
     getAllSurveys: async ({ commit }) => {
-      const res = await axios.get('/api/surveys-to-response')
+      const res = await axios.get('/api/surveys-to-answer')
       commit(SET_SURVEY_USER, null)
       commit(SET_SURVEYS_USER, res.data)
     },
     getOneSurvey: async ({ commit }, surveyId) => {
-      const res = await axios.get(`/api/surveys-to-response/${surveyId}`)
+      const res = await axios.get(`/api/surveys-to-answer/${surveyId}`)
       commit(SET_SURVEY_USER, res.data)
     },
   },

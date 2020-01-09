@@ -3,12 +3,12 @@ import ShowSurveyUser from './views/ShowSurveyUser'
 
 export const SurveyUsersRoutes = [
   {
-    path: '/surveys-to-response',
+    path: '/surveys-to-answer',
     name: 'surveysUserList',
     component: SurveysUserList
   },
   {
-    path: '/surveys-to-response/:surveyId',
+    path: '/surveys-to-answer/:surveyId',
     name: 'showSurveysUser',
     component: ShowSurveyUser
   }

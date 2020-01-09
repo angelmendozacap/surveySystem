@@ -49,7 +49,7 @@ class SurveyUserTest extends TestCase
 
         $anotherSurvey = factory(Survey::class)->create(['status' => 'ready']);
 
-        $response = $this->get('/api/surveys-to-response')
+        $response = $this->get('/api/surveys-to-answer')
             ->assertStatus(Response::HTTP_OK);
 
         $response->assertJson([
@@ -60,7 +60,7 @@ class SurveyUserTest extends TestCase
                         'status' => 'ready',
                     ],
                     'links' => [
-                        'self' => '/surveys-to-response/' . $this->survey->id
+                        'self' => '/surveys-to-answer/' . $this->survey->id
                     ]
                 ],
                 [
@@ -69,7 +69,7 @@ class SurveyUserTest extends TestCase
                         'status' => 'ready',
                     ],
                     'links' => [
-                        'self' => '/surveys-to-response/' . $anotherSurvey->id
+                        'self' => '/surveys-to-answer/' . $anotherSurvey->id
                     ]
                 ]
             ]
@@ -91,7 +91,7 @@ class SurveyUserTest extends TestCase
             'question_id' => $this->questions->last()->id
         ]);
 
-        $response = $this->get('/api/surveys-to-response/' . $this->survey->id)
+        $response = $this->get('/api/surveys-to-answer/' . $this->survey->id)
             ->assertStatus(Response::HTTP_OK);
 
         // dd(json_decode($response->getContent()));

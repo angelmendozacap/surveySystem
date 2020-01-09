@@ -42166,11 +42166,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SurveyUsersRoutes = [{
-  path: '/surveys-to-response',
+  path: '/surveys-to-answer',
   name: 'surveysUserList',
   component: _views_SurveysUserList__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
-  path: '/surveys-to-response/:surveyId',
+  path: '/surveys-to-answer/:surveyId',
   name: 'showSurveysUser',
   component: _views_ShowSurveyUser__WEBPACK_IMPORTED_MODULE_1__["default"]
 }];
@@ -42231,7 +42231,7 @@ var SurveysUserStore = {
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return axios.get('/api/surveys-to-response');
+                return axios.get('/api/surveys-to-answer');
 
               case 3:
                 res = _context.sent;
@@ -42263,7 +42263,7 @@ var SurveysUserStore = {
               case 0:
                 commit = _ref2.commit;
                 _context2.next = 3;
-                return axios.get("/api/surveys-to-response/".concat(surveyId));
+                return axios.get("/api/surveys-to-answer/".concat(surveyId));
 
               case 3:
                 res = _context2.sent;

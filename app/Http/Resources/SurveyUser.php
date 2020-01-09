@@ -23,7 +23,7 @@ class SurveyUser extends JsonResource
                 'created_at' => $this->created_at->diffForHumans(),
             ],
             'links' => [
-                'self' => '/surveys-to-response/' . $this->id
+                'self' => '/surveys-to-answer/' . $this->id
             ],
         ];
     }

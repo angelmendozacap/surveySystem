@@ -25,4 +25,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/questions/{question}/answers', 'AnswersController@store');
     Route::patch('/answers/{answer}', 'AnswersController@update');
     Route::delete('/answers/{answer}', 'AnswersController@destroy');
+
+    Route::get('/surveys-to-response', 'SurveyUserController@index');
+    Route::get('/surveys-to-response/{survey}', 'SurveyUserController@show');
 });

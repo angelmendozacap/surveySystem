@@ -32,8 +32,8 @@ class Survey extends Model
         return $this->hasMany(Answer::class);
     }
 
-    public function users()
+    public function surveysAnswered()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->hasMany(SurveyUser::class);
     }
 }

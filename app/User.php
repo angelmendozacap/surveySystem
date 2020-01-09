@@ -43,8 +43,8 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function surveys()
+    public function surveysTaken()
     {
-        return $this->belongsToMany(Survey::class)->withTimestamps();
+        return $this->hasMany(Survey::class);
     }
 }

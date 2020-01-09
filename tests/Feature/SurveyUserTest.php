@@ -7,7 +7,9 @@ use App\Answer;
 use App\Survey;
 use App\Question;
 use App\InputType;
+use App\SurveyUser;
 use Tests\TestCase;
+use App\SurveyResponse;
 use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -145,6 +147,61 @@ class SurveyUserTest extends TestCase
                         ]
                     ]
                 ]
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function a_user_can_take_a_survey_only_with_choices()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+
+        $answersforQuestion1 = factory(Answer::class, 2)->create([
+            'question_id' => $this->questions->first()->id
+        ]);
+
+        $answersforQuestion2 = factory(Answer::class, 2)->create([
+            'question_id' => $this->questions->last()->id
+        ]);
+
+        $response = $this->post("/api/surveys-to-answer/{$this->survey->id}", [
+            'responses' => [
+                [
+                    'answer_id' => $answersforQuestion1->last()->id,
+                    'question_id' => $this->questions->first()->id,
+                ],
+                [
+                    'answer_id' => $answersforQuestion2->first()->id,
+                    'question_id' => $this->questions->last()->id,
+                ],
+            ]
+        ]);
+
+        // dd($response->getContent());
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $this->assertCount(1, $surveyUser = SurveyUser::all());
+
+        $this->assertEquals($surveyUser->first()->survey_id, $this->survey->id);
+        $this->assertEquals($surveyUser->first()->user_id, $this->user->id);
+
+        $responses = SurveyResponse::all();
+        $this->assertEquals($surveyUser->first()->id, $responses->first()->survey_user_id);
+        $this->assertEquals($answersforQuestion1->last()->id, $responses->first()->answer_id);
+        $this->assertEquals($answersforQuestion2->first()->id, $responses->last()->answer_id);
+
+        $response->assertJson([
+            'data' => [
+                'survey_taken_id' => $surveyUser->first()->id,
+                'user_id' => $this->user->id,
+                'survey' => [
+                    'data' => [
+                        'survey_id' => $this->survey->id
+                    ]
+                ],
+                'taken_at' => $surveyUser->first()->created_at->diffForHumans(),
             ]
         ]);
     }

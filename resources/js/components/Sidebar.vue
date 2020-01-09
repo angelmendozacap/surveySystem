@@ -38,7 +38,7 @@
 
       <ul>
         <li>
-          <router-link to="/contacts" class="link">
+          <router-link :to="{name: 'surveysUserList'}" class="link">
             <span class="tracking-wide">Encuestas</span>
           </router-link>
         </li>

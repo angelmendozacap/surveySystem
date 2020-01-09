@@ -7,6 +7,7 @@ import { SurveyStore } from '../modules/Survey/store'
 import { QuestionStore } from '../modules/Question/store'
 import { InputTypeStore } from '../modules/InputType/store'
 import { AnswerStore } from '../modules/Answer/store'
+import { SurveysUserStore } from '../modules/SurveysUser/store'
 
 
 Vue.use(Vuex)
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     Survey: { ...SurveyStore },
     Question: { ...QuestionStore },
     InputType: { ...InputTypeStore },
-    Answer: { ...AnswerStore }
+    Answer: { ...AnswerStore },
+    SurveysUser: { ...SurveysUserStore }
   }
 })

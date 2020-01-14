@@ -198,6 +198,47 @@ class SurveysTest extends TestCase
         $this->assertCount(0, Survey::all());
     }
 
+    /** @test */
+    public function a_survey_status_can_be_changed()
+    {
+        $this->withoutExceptionHandling();
+
+        $role = factory(Role::class)->create(['name' => 'admin']);
+        $user = factory(User::class)->create(['role_id' => $role->id]);
+
+        $survey = factory(Survey::class)->create();
+        $questions = factory(Question::class, 3)->create(['survey_id' => $survey->id]);
+
+        collect(['draft', 'ready', 'finished'])->each(function ($field) use ($user, $survey) {
+
+            $this->actingAs($user, 'api');
+
+            $response = $this->patch('/api/surveys/'.$survey->id.'/change-status', [ 'status' => $field ]);
+
+            $response->assertStatus(Response::HTTP_OK);
+
+            $survey = $survey->fresh();
+
+            $this->assertEquals($field, $survey->status);
+
+            $response->assertJson([
+                'data' => [
+                    'survey_id' => $survey->id,
+                    'survey_name' => $survey->name,
+                    'description' => $survey->description,
+                    'status' => $survey->status,
+                    'created_at' => $survey->created_at->diffForHumans(),
+                ],
+                'links' => [
+                    'self' => $survey->path(),
+                ]
+            ]);
+        });
+
+        $this->assertCount(3, Question::all());
+        $this->assertCount(1, Survey::all());
+    }
+
     private function data()
     {
         return [

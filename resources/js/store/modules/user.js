@@ -1,3 +1,5 @@
+const SET_AUTH_USER = 'user/SET_AUTH_USER'
+
 const state = {
   user: null
 }
@@ -8,16 +10,16 @@ const getters = {
 }
 
 const mutations = {
-  SET_AUTH_USER(state, user) {
+  [SET_AUTH_USER](state, user) {
     state.user = user
   }
 }
 
 const actions = {
-  async fetchAuthUser({ commit }) {
+  fetchAuthUser: async ({ commit }) => {
     try {
       const res = await axios.get('/api/auth-user')
-      commit('SET_AUTH_USER', res.data)
+      commit(SET_AUTH_USER, res.data)
 
     } catch (err) {
       console.log('Unable to fetch auth user')

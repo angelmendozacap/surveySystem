@@ -3,7 +3,7 @@
     <div class="p-4 mb-5 rounded bg-white shadow-lg sticky top-0 z-10">
       <div class="flex items-center justify-between">
         <h1 class="text-3xl leading-tight text-left text-blue-500">Encuesta | {{ surveyItem.data.survey_name }}</h1>
-        <button class="py-1 px-2 text-sm bg-green-500 text-white rounded hover:bg-green-400">Habilitar Encuesta</button>
+        <DraftOrReadyBtn :survey="surveyItem" />
       </div>
 
       <hr class="my-2" />
@@ -32,13 +32,15 @@
 <script>
 
 import QuestionEditItem from '../components/QuestionEditItem'
+import DraftOrReadyBtn from '../components/DraftOrReadyBtn'
 
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ShowSurvey",
   components: {
-    QuestionEditItem
+    QuestionEditItem,
+    DraftOrReadyBtn
   },
   methods: {
     ...mapActions("Survey", ["getSurvey"]),

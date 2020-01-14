@@ -1,7 +1,7 @@
 export const SET_SURVEYS = 'survey/SET_SURVEYS'
 export const SET_SURVEY = 'survey/SET_SURVEY'
 export const SET_ERRORS = 'survey/SET_ERRORS'
-
+const UPDATE_SURVEY = 'survey/UPDATE_SURVEY'
 
 export const SurveyStore = {
   namespaced: true,
@@ -34,7 +34,20 @@ export const SurveyStore = {
     createSurvey: async ({ commit }, { name, description, status }) => {
       try {
         const res = await axios.post('/api/surveys', { name, description, status })
+
         commit(SET_SURVEY, res.data)
+        commit(SET_ERRORS, null)
+      } catch (err) {
+        commit(SET_ERRORS, err.response.data.errors)
+      }
+    },
+    changeSurveyStatus: async ({ commit }, payload) => {
+      try {
+        const { status, surveyId } = payload
+        const res = await axios.patch(`/api/surveys/${surveyId}/change-status`, { status })
+
+        commit(UPDATE_SURVEY, res.data)
+        commit(SET_ERRORS, null)
       } catch (err) {
         commit(SET_ERRORS, err.response.data.errors)
       }
@@ -47,6 +60,9 @@ export const SurveyStore = {
     [SET_SURVEY](state, payload) {
       state.surveys.push(payload)
       state.survey = payload
+    },
+    [UPDATE_SURVEY](state, payload) {
+      state.survey = Object.assign({}, payload)
     },
     [SET_ERRORS](state, payload) {
       state.errors = payload

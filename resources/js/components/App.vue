@@ -26,12 +26,12 @@ export default {
     Sidebar
   },
   methods: {
-    ...mapActions('User', [
-      'fetchAuthUser'
-    ])
+    ...mapActions('User', ['fetchAuthUser']),
+    ...mapActions('SurveysUser', ['getSurveysTaken'])
   },
   mounted() {
     this.fetchAuthUser()
+    this.getSurveysTaken()
   }
 }
 </script>

@@ -1742,9 +1742,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Header: _Header__WEBPACK_IMPORTED_MODULE_0__["default"],
     Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('User', ['fetchAuthUser'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('User', ['fetchAuthUser']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('SurveysUser', ['getSurveysTaken'])),
   mounted: function mounted() {
     this.fetchAuthUser();
+    this.getSurveysTaken();
   }
 });
 
@@ -2174,6 +2175,65 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])("InputType", ["inputTypesList", "errorsList"])),
   mounted: function mounted() {
     this.getInputTypes();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'DraftOrReadyBtn',
+  props: {
+    survey: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('Survey', ['changeSurveyStatus']), {
+    changeStatus: function changeStatus() {
+      var data = {
+        status: this.survey.data.status === 'draft' ? 'ready' : 'draft',
+        surveyId: this.survey.data.survey_id
+      };
+      this.changeSurveyStatus(data);
+    }
+  }),
+  computed: {
+    classSurveyStatus: function classSurveyStatus() {
+      return {
+        'bg-green-500 hover:bg-green-400': this.survey.data.status === 'draft',
+        'bg-gray-600 hover:bg-gray-500': this.survey.data.status === 'ready'
+      };
+    },
+    textSurveyStatus: function textSurveyStatus() {
+      return this.survey.data.status === 'draft' ? 'Habilitar' : 'Ocultar para Edición';
+    }
   }
 });
 
@@ -2750,7 +2810,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_QuestionEditItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/QuestionEditItem */ "./resources/js/modules/Survey/components/QuestionEditItem.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_DraftOrReadyBtn__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/DraftOrReadyBtn */ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2790,13 +2851,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ShowSurvey",
   components: {
-    QuestionEditItem: _components_QuestionEditItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+    QuestionEditItem: _components_QuestionEditItem__WEBPACK_IMPORTED_MODULE_0__["default"],
+    DraftOrReadyBtn: _components_DraftOrReadyBtn__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Survey", ["getSurvey"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Question", ["getQuestions", "createQuestion"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("InputType", ["getInputTypes"])),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("Survey", ["surveyItem"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("Question", ["questionsList"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Survey", ["getSurvey"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Question", ["getQuestions", "createQuestion"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("InputType", ["getInputTypes"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])("Survey", ["surveyItem"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])("Question", ["questionsList"])),
   mounted: function mounted() {
     var surveyId = this.$route.params.surveyId;
     this.getSurvey(surveyId);
@@ -3020,11 +3083,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SurveysUserList',
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("SurveysUser", ["getAllSurveys"])),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("SurveysUser", ["surveysUserList"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("SurveysUser", ["getAllSurveys"]), {
+    disableSurvey: function disableSurvey(surveysTakenByMe, survey_id) {
+      var surveyTaken = surveysTakenByMe.find(function (surveyTaken) {
+        return surveyTaken.data.survey.data.survey_id == survey_id;
+      });
+
+      if (!surveyTaken) {
+        return false;
+      }
+
+      return surveyTaken.data.taken_at;
+    }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("SurveysUser", ["surveysUserList", "surveysTakenByMe"])),
   mounted: function mounted() {
     this.getAllSurveys();
   }
@@ -22864,6 +22950,35 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("button", {
+    staticClass: "py-1 px-2 rounded text-white",
+    class: _vm.classSurveyStatus,
+    domProps: { textContent: _vm._s(_vm.textSurveyStatus) },
+    on: { click: _vm.changeStatus }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/components/InputTypes/CheckBox.vue?vue&type=template&id=72042e09&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/components/InputTypes/CheckBox.vue?vue&type=template&id=72042e09& ***!
@@ -23496,28 +23611,27 @@ var render = function() {
             staticClass: "p-4 mb-5 rounded bg-white shadow-lg sticky top-0 z-10"
           },
           [
-            _c("div", { staticClass: "flex items-center justify-between" }, [
-              _c(
-                "h1",
-                {
-                  staticClass: "text-3xl leading-tight text-left text-blue-500"
-                },
-                [
-                  _vm._v(
-                    "Encuesta | " + _vm._s(_vm.surveyItem.data.survey_name)
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "py-1 px-2 text-sm bg-green-500 text-white rounded hover:bg-green-400"
-                },
-                [_vm._v("Habilitar Encuesta")]
-              )
-            ]),
+            _c(
+              "div",
+              { staticClass: "flex items-center justify-between" },
+              [
+                _c(
+                  "h1",
+                  {
+                    staticClass:
+                      "text-3xl leading-tight text-left text-blue-500"
+                  },
+                  [
+                    _vm._v(
+                      "Encuesta | " + _vm._s(_vm.surveyItem.data.survey_name)
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("DraftOrReadyBtn", { attrs: { survey: _vm.surveyItem } })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("hr", { staticClass: "my-2" }),
             _vm._v(" "),
@@ -23879,32 +23993,194 @@ var render = function() {
           },
           [_vm._v("No se encontraron encuestas")]
         )
-      : _c(
-          "div",
-          { staticClass: "mb-5 rounded bg-white shadow" },
-          _vm._l(_vm.surveysUserList.data, function(survey, index) {
-            return _c(
-              "router-link",
-              {
-                key: index,
-                staticClass:
-                  "p-4 border-b border-gray-400 hover:bg-gray-200 cursor-pointer",
-                attrs: { to: survey.links.self, tag: "article" }
-              },
-              [
-                _c("h2", {
-                  staticClass: "text-xl font-semibold text-blue-500",
-                  domProps: { textContent: _vm._s(survey.data.survey_name) }
+      : _c("div", { staticClass: "mb-5 rounded bg-white shadow" }, [
+          _vm.surveysTakenByMe
+            ? _c(
+                "div",
+                _vm._l(_vm.surveysUserList.data, function(survey, index) {
+                  return _c(
+                    "router-link",
+                    {
+                      key: index,
+                      staticClass:
+                        "p-4 border-b border-gray-400 hover:bg-gray-200 cursor-pointer",
+                      class: {
+                        "bg-gray-200 opacity-75": _vm.disableSurvey(
+                          _vm.surveysTakenByMe.data,
+                          survey.data.survey_id
+                        )
+                      },
+                      attrs: { tag: "article", to: survey.links.self }
+                    },
+                    [
+                      _c("h2", {
+                        staticClass: "text-xl font-semibold text-blue-500",
+                        domProps: {
+                          textContent: _vm._s(survey.data.survey_name)
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.disableSurvey(
+                        _vm.surveysTakenByMe.data,
+                        survey.data.survey_id
+                      )
+                        ? _c(
+                            "p",
+                            {
+                              staticClass:
+                                "mt-2 font-light text-muted italic text-green-600 flex items-center"
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "fill-current mr-1 w-5 h-5",
+                                  attrs: {
+                                    viewBox: "0 -21 512.016 512",
+                                    xmlns: "http://www.w3.org/2000/svg"
+                                  }
+                                },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      d:
+                                        "m234.667969 469.339844c-129.386719 0-234.667969-105.277344-234.667969-234.664063s105.28125-234.6679685 234.667969-234.6679685c44.992187 0 88.765625 12.8203125 126.589843 37.0976565 7.425782 4.78125 9.601563 14.679687 4.820313 22.125-4.796875 7.445312-14.675781 9.597656-22.121094 4.820312-32.640625-20.972656-70.441406-32.042969-109.289062-32.042969-111.746094 0-202.667969 90.921876-202.667969 202.667969 0 111.742188 90.921875 202.664063 202.667969 202.664063 111.742187 0 202.664062-90.921875 202.664062-202.664063 0-6.679687-.320312-13.292969-.9375-19.796875-.851562-8.8125 5.589844-16.621094 14.378907-17.472656 8.832031-.8125 16.617187 5.589844 17.472656 14.378906.722656 7.53125 1.085937 15.167969 1.085937 22.890625 0 129.386719-105.277343 234.664063-234.664062 234.664063zm0 0"
+                                    }
+                                  }),
+                                  _c("path", {
+                                    attrs: {
+                                      d:
+                                        "m261.332031 288.007812c-4.09375 0-8.191406-1.558593-11.304687-4.691406l-96-96c-6.25-6.253906-6.25-16.386718 0-22.636718s16.382812-6.25 22.632812 0l84.695313 84.695312 223.335937-223.339844c6.253906-6.25 16.386719-6.25 22.636719 0s6.25 16.382813 0 22.632813l-234.667969 234.667969c-3.136718 3.113281-7.230468 4.671874-11.328125 4.671874zm0 0"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(
+                                "\n          Respondido " +
+                                  _vm._s(
+                                    _vm.disableSurvey(
+                                      _vm.surveysTakenByMe.data,
+                                      survey.data.survey_id
+                                    )
+                                  ) +
+                                  "\n        "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "p",
+                            {
+                              staticClass:
+                                "mt-2 font-light text-muted italic text-orange-500 flex items-center"
+                            },
+                            [
+                              _c(
+                                "svg",
+                                {
+                                  staticClass: "fill-current mr-1 w-5 h-5",
+                                  attrs: {
+                                    "enable-background": "new 0 0 512 512",
+                                    viewBox: "0 0 512 512",
+                                    xmlns: "http://www.w3.org/2000/svg"
+                                  }
+                                },
+                                [
+                                  _c("g", [
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "m256 512c-68.38 0-132.667-26.629-181.02-74.98-48.351-48.353-74.98-112.64-74.98-181.02s26.629-132.667 74.98-181.02c48.353-48.351 112.64-74.98 181.02-74.98s132.667 26.629 181.02 74.98c48.351 48.353 74.98 112.64 74.98 181.02s-26.629 132.667-74.98 181.02c-48.353 48.351-112.64 74.98-181.02 74.98zm0-482c-60.367 0-117.12 23.508-159.806 66.194s-66.194 99.439-66.194 159.806 23.508 117.12 66.194 159.806 99.439 66.194 159.806 66.194 117.12-23.508 159.806-66.194 66.194-99.439 66.194-159.806-23.508-117.12-66.194-159.806-99.439-66.194-159.806-66.194z"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m241 60.036h30v40.032h-30z"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "m360.398 116.586h40.032v30h-40.032z",
+                                          transform:
+                                            "matrix(.707 -.707 .707 .707 18.375 307.534)"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m411.932 241h40.032v30h-40.032z"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m365.414 360.398h30v40.032h-30z",
+                                          transform:
+                                            "matrix(.707 -.707 .707 .707 -157.573 380.414)"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m241 411.932h30v40.032h-30z"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "m111.57 365.414h40.032v30h-40.032z",
+                                          transform:
+                                            "matrix(.707 -.707 .707 .707 -230.453 204.466)"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m60.036 241h40.032v30h-40.032z"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d: "m116.586 111.57h30v40.032h-30z",
+                                          transform:
+                                            "matrix(.707 -.707 .707 .707 -54.505 131.586)"
+                                        }
+                                      })
+                                    ]),
+                                    _c("g", [
+                                      _c("path", {
+                                        attrs: {
+                                          d:
+                                            "m361.892 271h-120.892v-120.892h30v90.892h90.892z"
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v("\n          Encuesta Pendiente\n        ")
+                            ]
+                          )
+                    ]
+                  )
                 }),
-                _vm._v(" "),
-                _c("small", { staticClass: "text-gray-600" }, [
-                  _vm._v("Creado " + _vm._s(survey.data.created_at))
-                ])
-              ]
-            )
-          }),
-          1
-        )
+                1
+              )
+            : _vm._e()
+        ])
   ])
 }
 var staticRenderFns = []
@@ -41236,6 +41512,75 @@ var QuestionStore = {
 
 /***/ }),
 
+/***/ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/modules/Survey/components/DraftOrReadyBtn.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a& */ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a&");
+/* harmony import */ var _DraftOrReadyBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DraftOrReadyBtn.vue?vue&type=script&lang=js& */ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DraftOrReadyBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/modules/Survey/components/DraftOrReadyBtn.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DraftOrReadyBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./DraftOrReadyBtn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DraftOrReadyBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/components/DraftOrReadyBtn.vue?vue&type=template&id=7a992b7a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DraftOrReadyBtn_vue_vue_type_template_id_7a992b7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/modules/Survey/components/InputTypes/CheckBox.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/modules/Survey/components/InputTypes/CheckBox.vue ***!
@@ -41746,6 +42091,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var SET_SURVEYS = 'survey/SET_SURVEYS';
 var SET_SURVEY = 'survey/SET_SURVEY';
 var SET_ERRORS = 'survey/SET_ERRORS';
+var UPDATE_SURVEY = 'survey/UPDATE_SURVEY';
 var SurveyStore = {
   namespaced: true,
   state: {
@@ -41850,20 +42196,21 @@ var SurveyStore = {
               case 5:
                 res = _context3.sent;
                 commit(SET_SURVEY, res.data);
-                _context3.next = 12;
+                commit(SET_ERRORS, null);
+                _context3.next = 13;
                 break;
 
-              case 9:
-                _context3.prev = 9;
+              case 10:
+                _context3.prev = 10;
                 _context3.t0 = _context3["catch"](2);
                 commit(SET_ERRORS, _context3.t0.response.data.errors);
 
-              case 12:
+              case 13:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[2, 9]]);
+        }, _callee3, null, [[2, 10]]);
       }));
 
       function createSurvey(_x4, _x5) {
@@ -41871,6 +42218,49 @@ var SurveyStore = {
       }
 
       return createSurvey;
+    }(),
+    changeSurveyStatus: function () {
+      var _changeSurveyStatus = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref5, payload) {
+        var commit, status, surveyId, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit;
+                _context4.prev = 1;
+                status = payload.status, surveyId = payload.surveyId;
+                _context4.next = 5;
+                return axios.patch("/api/surveys/".concat(surveyId, "/change-status"), {
+                  status: status
+                });
+
+              case 5:
+                res = _context4.sent;
+                commit(UPDATE_SURVEY, res.data);
+                commit(SET_ERRORS, null);
+                _context4.next = 13;
+                break;
+
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](1);
+                commit(SET_ERRORS, _context4.t0.response.data.errors);
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 10]]);
+      }));
+
+      function changeSurveyStatus(_x6, _x7) {
+        return _changeSurveyStatus.apply(this, arguments);
+      }
+
+      return changeSurveyStatus;
     }()
   },
   mutations: (_mutations = {}, _defineProperty(_mutations, SET_SURVEYS, function (state, payload) {
@@ -41878,6 +42268,8 @@ var SurveyStore = {
   }), _defineProperty(_mutations, SET_SURVEY, function (state, payload) {
     state.surveys.push(payload);
     state.survey = payload;
+  }), _defineProperty(_mutations, UPDATE_SURVEY, function (state, payload) {
+    state.survey = Object.assign({}, payload);
   }), _defineProperty(_mutations, SET_ERRORS, function (state, payload) {
     state.errors = payload;
   }), _mutations)
@@ -42207,16 +42599,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var _mutations;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var SET_SURVEYS_USER = 'surveyUsers/SET_SURVEYS_USER';
 var SET_SURVEY_USER = 'surveyUsers/SET_SURVEY_USER';
 var SET_ANSWER_SURVEY = 'surveyUsers/SET_ANSWER_SURVEY';
 var SET_ERRORS = 'surveyUsers/SET_ERRORS';
+var SET_SURVEYS_TAKEN = 'surveyUsers/SET_SURVEYS_TAKEN';
+var UPDATE_SURVEYS_TAKEN = 'surveyUsers/UPDATE_SURVEYS_TAKEN';
 var SurveysUserStore = {
   namespaced: true,
   state: {
@@ -42224,17 +42618,22 @@ var SurveysUserStore = {
     surveyUser: null,
     surveysTaken: null
   },
-  getters: {
+  getters: _defineProperty({
     surveysUserList: function surveysUserList(state) {
       return state.surveysUser;
     },
     surveyUserItem: function surveyUserItem(state) {
       return state.surveyUser;
+    },
+    surveysTakenByMe: function surveysTakenByMe(state) {
+      return state.surveysTaken;
     }
-  },
+  }, "surveysTakenByMe", function surveysTakenByMe(state) {
+    return state.surveysTaken;
+  }),
   actions: {
-    getAllSurveys: function () {
-      var _getAllSurveys = _asyncToGenerator(
+    getSurveysTaken: function () {
+      var _getSurveysTaken = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
         var commit, res;
@@ -42243,23 +42642,62 @@ var SurveysUserStore = {
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                _context.next = 3;
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.get('/api/surveys-answered');
+
+              case 4:
+                res = _context.sent;
+                commit(SET_SURVEYS_TAKEN, res.data);
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                console.log('Unable to fetch surveys taken by me');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 8]]);
+      }));
+
+      function getSurveysTaken(_x) {
+        return _getSurveysTaken.apply(this, arguments);
+      }
+
+      return getSurveysTaken;
+    }(),
+    getAllSurveys: function () {
+      var _getAllSurveys = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2) {
+        var commit, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit;
+                _context2.next = 3;
                 return axios.get('/api/surveys-to-answer');
 
               case 3:
-                res = _context.sent;
+                res = _context2.sent;
                 commit(SET_SURVEY_USER, null);
                 commit(SET_SURVEYS_USER, res.data);
 
               case 6:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }));
 
-      function getAllSurveys(_x) {
+      function getAllSurveys(_x2) {
         return _getAllSurveys.apply(this, arguments);
       }
 
@@ -42268,29 +42706,29 @@ var SurveysUserStore = {
     getOneSurvey: function () {
       var _getOneSurvey = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, surveyId) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, surveyId) {
         var commit, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref2.commit;
-                _context2.next = 3;
+                commit = _ref3.commit;
+                _context3.next = 3;
                 return axios.get("/api/surveys-to-answer/".concat(surveyId));
 
               case 3:
-                res = _context2.sent;
+                res = _context3.sent;
                 commit(SET_SURVEY_USER, res.data);
 
               case 5:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }));
 
-      function getOneSurvey(_x2, _x3) {
+      function getOneSurvey(_x3, _x4) {
         return _getOneSurvey.apply(this, arguments);
       }
 
@@ -42299,32 +42737,32 @@ var SurveysUserStore = {
     answerSurvey: function () {
       var _answerSurvey = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref4, payload) {
         var commit, surveyId, responses, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref3.commit;
+                commit = _ref4.commit;
                 surveyId = payload.surveyId, responses = payload.responses;
-                _context3.next = 4;
+                _context4.next = 4;
                 return axios.post("/api/surveys-to-answer/".concat(surveyId), {
                   responses: responses
                 });
 
               case 4:
-                res = _context3.sent;
-                console.log(res.data); // commit(SET_ANSWER_SURVEY, res.data)
+                res = _context4.sent;
+                commit(UPDATE_SURVEYS_TAKEN, res.data);
 
               case 6:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }));
 
-      function answerSurvey(_x4, _x5) {
+      function answerSurvey(_x5, _x6) {
         return _answerSurvey.apply(this, arguments);
       }
 
@@ -42335,6 +42773,10 @@ var SurveysUserStore = {
     state.surveysUser = payload;
   }), _defineProperty(_mutations, SET_SURVEY_USER, function (state, payload) {
     state.surveyUser = payload;
+  }), _defineProperty(_mutations, SET_SURVEYS_TAKEN, function (state, surveys) {
+    state.surveysTaken = surveys;
+  }), _defineProperty(_mutations, UPDATE_SURVEYS_TAKEN, function (state, survey) {
+    state.surveysTaken.data.push(survey);
   }), _mutations)
 };
 
@@ -42586,6 +43028,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var SET_AUTH_USER = 'user/SET_AUTH_USER';
 var state = {
   user: null
 };
@@ -42594,11 +43039,11 @@ var getters = {
     return state.user;
   }
 };
-var mutations = {
-  SET_AUTH_USER: function SET_AUTH_USER(state, user) {
-    state.user = user;
-  }
-};
+
+var mutations = _defineProperty({}, SET_AUTH_USER, function (state, user) {
+  state.user = user;
+});
+
 var actions = {
   fetchAuthUser: function () {
     var _fetchAuthUser = _asyncToGenerator(
@@ -42616,7 +43061,7 @@ var actions = {
 
             case 4:
               res = _context.sent;
-              commit('SET_AUTH_USER', res.data);
+              commit(SET_AUTH_USER, res.data);
               _context.next = 11;
               break;
 

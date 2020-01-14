@@ -13,6 +13,11 @@ const tailwindcss = require('tailwindcss')
  |
  */
 
+mix.config.webpackConfig.output = {
+  chunkFilename: 'js/components/[name].bundle.js',
+  publicPath: '/',
+};
+
 mix.js('resources/js/app.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
   .options({

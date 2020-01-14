@@ -1,5 +1,5 @@
-import SurveysUserList from './views/SurveysUserList'
-import ShowSurveyUser from './views/ShowSurveyUser'
+const SurveysUserList = () => import('./views/SurveysUserList')
+const ShowSurveyUser = () => import('./views/ShowSurveyUser')
 
 export const SurveyUsersRoutes = [
   {

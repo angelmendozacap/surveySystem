@@ -32,12 +32,24 @@ export default {
     SurveyUserItem
   },
   methods: {
-    ...mapActions("SurveysUser", ["getOneSurvey"]),
+    ...mapActions("SurveysUser", ["getOneSurvey", "answerSurvey"]),
 
     submitQuestions(e) {
+      const responses = []
       this.surveyUserItem.data.questions.forEach(question => {
-        console.log(e.target[question.data.code_name].value)
+        const answer = {
+          answer_id: e.target[question.data.code_name].value || null,
+          question_id: question.data.question_id
+        }
+
+        responses.push(answer)
       })
+      const data = {
+        surveyId: this.surveyUserItem.data.survey_id,
+        responses
+      }
+
+      this.answerSurvey(data)
     }
   },
   computed: {

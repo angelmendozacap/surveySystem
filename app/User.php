@@ -45,6 +45,6 @@ class User extends Authenticatable
 
     public function surveysTaken()
     {
-        return $this->hasMany(Survey::class);
+        return $this->hasMany(SurveyUser::class);
     }
 }

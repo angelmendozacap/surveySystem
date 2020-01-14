@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Role;
 use App\User;
 use App\Answer;
 use App\Survey;
@@ -143,6 +144,60 @@ class SurveyUserTest extends TestCase
                                         'answer_id' => $answersforQuestion2->last()->id
                                     ]
                                 ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function surveys_taken_can_be_retrieved()
+    {
+        $this->withoutExceptionHandling();
+
+        $adminRole = factory(Role::class)->create(['name' => 'admin']);
+        $user = factory(User::class)->create(['role_id' => $adminRole->id]);
+
+        $this->actingAs($user, 'api');
+
+        $answersforQuestion1 = factory(Answer::class, 2)->create([
+            'question_id' => $this->questions->first()->id
+        ]);
+
+        $answersforQuestion2 = factory(Answer::class, 2)->create([
+            'question_id' => $this->questions->last()->id
+        ]);
+
+        $this->post("/api/surveys-to-answer/{$this->survey->id}", [
+            'responses' => [
+                [
+                    'answer_id' => $answersforQuestion1->last()->id,
+                    'question_id' => $this->questions->first()->id,
+                ],
+                [
+                    'answer_id' => $answersforQuestion2->first()->id,
+                    'question_id' => $this->questions->last()->id,
+                ],
+            ]
+        ]);
+
+        factory(Survey::class, 2)->create([ 'status' => 'draft' ]);
+
+        $response = $this->get('/api/surveys-answered')
+            ->assertStatus(Response::HTTP_OK);
+
+        // dd($response->getContent());
+        $response->assertJson([
+            'data' => [
+                [
+                    'data' => [
+                        'survey_taken_id' => $this->survey->id,
+                        'user_id' => $user->id,
+                        'survey' => [
+                            'data' => [
+                                'survey_name' => $this->survey->name,
                             ]
                         ]
                     ]

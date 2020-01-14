@@ -29,4 +29,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/surveys-to-answer', 'SurveyUserController@index');
     Route::get('/surveys-to-answer/{survey}', 'SurveyUserController@show');
     Route::post('/surveys-to-answer/{survey}', 'SurveyUserController@store');
+
+    Route::get('/surveys-answered', 'SurveysTakenController@index');
 });

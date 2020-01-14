@@ -2953,11 +2953,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     SurveyUserItem: _components_SurveyUserItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("SurveysUser", ["getOneSurvey"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("SurveysUser", ["getOneSurvey", "answerSurvey"]), {
     submitQuestions: function submitQuestions(e) {
+      var responses = [];
       this.surveyUserItem.data.questions.forEach(function (question) {
-        console.log(e.target[question.data.code_name].value);
+        var answer = {
+          answer_id: e.target[question.data.code_name].value || null,
+          question_id: question.data.question_id
+        };
+        responses.push(answer);
       });
+      var data = {
+        surveyId: this.surveyUserItem.data.survey_id,
+        responses: responses
+      };
+      this.answerSurvey(data);
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("SurveysUser", ["surveyUserItem"])),
@@ -42181,13 +42191,14 @@ var SurveyUsersRoutes = [{
 /*!***************************************************!*\
   !*** ./resources/js/modules/SurveysUser/store.js ***!
   \***************************************************/
-/*! exports provided: SET_SURVEYS_USER, SET_SURVEY_USER, SET_ERRORS, SurveysUserStore */
+/*! exports provided: SET_SURVEYS_USER, SET_SURVEY_USER, SET_ANSWER_SURVEY, SET_ERRORS, SurveysUserStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SURVEYS_USER", function() { return SET_SURVEYS_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SURVEY_USER", function() { return SET_SURVEY_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_ANSWER_SURVEY", function() { return SET_ANSWER_SURVEY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_ERRORS", function() { return SET_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SurveysUserStore", function() { return SurveysUserStore; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -42204,12 +42215,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var SET_SURVEYS_USER = 'surveyUsers/SET_SURVEYS_USER';
 var SET_SURVEY_USER = 'surveyUsers/SET_SURVEY_USER';
+var SET_ANSWER_SURVEY = 'surveyUsers/SET_ANSWER_SURVEY';
 var SET_ERRORS = 'surveyUsers/SET_ERRORS';
 var SurveysUserStore = {
   namespaced: true,
   state: {
     surveysUser: null,
-    surveyUser: null
+    surveyUser: null,
+    surveysTaken: null
   },
   getters: {
     surveysUserList: function surveysUserList(state) {
@@ -42282,6 +42295,40 @@ var SurveysUserStore = {
       }
 
       return getOneSurvey;
+    }(),
+    answerSurvey: function () {
+      var _answerSurvey = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, payload) {
+        var commit, surveyId, responses, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                surveyId = payload.surveyId, responses = payload.responses;
+                _context3.next = 4;
+                return axios.post("/api/surveys-to-answer/".concat(surveyId), {
+                  responses: responses
+                });
+
+              case 4:
+                res = _context3.sent;
+                console.log(res.data); // commit(SET_ANSWER_SURVEY, res.data)
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function answerSurvey(_x4, _x5) {
+        return _answerSurvey.apply(this, arguments);
+      }
+
+      return answerSurvey;
     }()
   },
   mutations: (_mutations = {}, _defineProperty(_mutations, SET_SURVEYS_USER, function (state, payload) {

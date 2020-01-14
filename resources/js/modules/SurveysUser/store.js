@@ -1,5 +1,6 @@
 export const SET_SURVEYS_USER = 'surveyUsers/SET_SURVEYS_USER'
 export const SET_SURVEY_USER = 'surveyUsers/SET_SURVEY_USER'
+export const SET_ANSWER_SURVEY = 'surveyUsers/SET_ANSWER_SURVEY'
 export const SET_ERRORS = 'surveyUsers/SET_ERRORS'
 
 export const SurveysUserStore = {
@@ -7,6 +8,7 @@ export const SurveysUserStore = {
   state: {
     surveysUser: null,
     surveyUser: null,
+    surveysTaken: null,
   },
   getters: {
     surveysUserList(state) {
@@ -26,6 +28,12 @@ export const SurveysUserStore = {
       const res = await axios.get(`/api/surveys-to-answer/${surveyId}`)
       commit(SET_SURVEY_USER, res.data)
     },
+    answerSurvey: async ({ commit }, payload) => {
+      const { surveyId, responses } = payload
+      const res = await axios.post(`/api/surveys-to-answer/${surveyId}`, { responses })
+      console.log(res.data)
+      // commit(SET_ANSWER_SURVEY, res.data)
+    }
   },
   mutations: {
     [SET_SURVEYS_USER](state, payload) {

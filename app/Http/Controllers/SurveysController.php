@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Survey;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\StoreSurveyRequest;
-use App\Http\Resources\Survey as SurveyResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Survey as SurveyResource;
 
 class SurveysController extends Controller
 {
@@ -58,6 +59,22 @@ class SurveysController extends Controller
         $this->authorize('update', $survey);
 
         $survey->update($request->all());
+        return (new SurveyResource($survey))->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function changeStatus(Survey $survey)
+    {
+        $data = request()->validate([
+            'status' => [
+                'required',
+                Rule::in(['draft', 'ready', 'finished'])
+            ]
+        ]);
+
+        $survey->update([
+            'status' => $data['status']
+        ]);
+
         return (new SurveyResource($survey))->response()->setStatusCode(Response::HTTP_OK);
     }
 

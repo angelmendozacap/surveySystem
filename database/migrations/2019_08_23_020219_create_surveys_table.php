@@ -17,7 +17,7 @@ class CreateSurveysTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('status', ['draft', 'ready'])->default('draft');
+            $table->enum('status', ['draft', 'ready', 'finished'])->default('draft');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/auth-user', 'AuthUserController@show');
 
     Route::apiResource('/surveys', 'SurveysController');
+    Route::patch('/surveys/{survey}/change-status', 'SurveysController@changeStatus');
 
     Route::get('/surveys/{survey}/questions', 'QuestionsController@index');
     Route::post('/surveys/{survey}/questions', 'QuestionsController@store');

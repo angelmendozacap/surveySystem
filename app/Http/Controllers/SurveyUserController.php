@@ -20,6 +20,8 @@ class SurveyUserController extends Controller
 
     public function show(Survey $survey)
     {
+        $this->authorize('view', $survey);
+
         $survey->load('questions.answers', 'questions.inputType');
 
         return new SurveyQuestionsResource($survey);

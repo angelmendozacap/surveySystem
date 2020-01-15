@@ -30,7 +30,15 @@ class SurveyPolicy
      */
     public function view(User $user, Survey $survey)
     {
-        //
+        $isAdminOrCreator = in_array(strtolower($user->role->name), [
+            'admin', 'creator'
+        ]);
+
+        if (!$isAdminOrCreator)
+            return $survey->status === 'ready';
+
+
+        return $isAdminOrCreator;
     }
 
     /**

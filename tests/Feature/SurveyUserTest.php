@@ -153,6 +153,20 @@ class SurveyUserTest extends TestCase
     }
 
     /** @test */
+    public function a_ready_survey_can_be_retrieved_with_questions_and_answers()
+    {
+        // $this->withoutExceptionHandling();
+
+        $this->actingAs($this->user, 'api');
+
+        $survey = factory(Survey::class)->create();
+
+        $response = $this->get('/api/surveys-to-answer/' . $survey->id);
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    /** @test */
     public function surveys_taken_can_be_retrieved()
     {
         $this->withoutExceptionHandling();

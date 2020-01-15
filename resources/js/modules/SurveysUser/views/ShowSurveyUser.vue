@@ -11,7 +11,7 @@
 
       <form @submit.prevent="submitQuestions">
         <div class="flex flex-col items-center">
-          <div class="md:w-3/4 w-full">
+          <div class="md:w-4/5 w-full">
             <SurveyUserItem v-for="(question,index) in surveyUserItem.data.questions" :key="index" :question="question" :index="index + 1" />
             <button type="submit" class=" w-full px-3 py-2 rounded text-lg text-white bg-green-500 hover:bg-green-400">Enviar Respuestas</button>
           </div>
@@ -34,7 +34,7 @@ export default {
   methods: {
     ...mapActions("SurveysUser", ["getOneSurvey", "answerSurvey"]),
 
-    submitQuestions(e) {
+    async submitQuestions(e) {
       const responses = []
       this.surveyUserItem.data.questions.forEach(question => {
         const answer = {
@@ -49,11 +49,16 @@ export default {
         responses
       }
 
-      this.answerSurvey(data)
+      await this.answerSurvey(data)
+
+      if (!this.errorsList) {
+        this.$router.push({name: 'surveysUserList'})
+      }
+
     }
   },
   computed: {
-    ...mapGetters("SurveysUser", ["surveyUserItem"]),
+    ...mapGetters("SurveysUser", ["surveyUserItem"], "errorsList"),
   },
   mounted() {
     const surveyId = this.$route.params.surveyId;

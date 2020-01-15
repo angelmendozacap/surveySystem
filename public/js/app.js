@@ -41663,14 +41663,15 @@ var SurveyStore = {
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                _context.next = 3;
+                commit(SET_SURVEYS, []);
+                _context.next = 4;
                 return axios.get('/api/surveys');
 
-              case 3:
+              case 4:
                 res = _context.sent;
                 commit(SET_SURVEYS, res.data.data);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -42035,6 +42036,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SurveyUsersRoutes", function() { return SurveyUsersRoutes; });
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../store/index */ "./resources/js/store/index.js");
 var SurveysUserList = function SurveysUserList() {
   return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./views/SurveysUserList */ "./resources/js/modules/SurveysUser/views/SurveysUserList.vue"));
 };
@@ -42043,6 +42045,7 @@ var ShowSurveyUser = function ShowSurveyUser() {
   return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./views/ShowSurveyUser */ "./resources/js/modules/SurveysUser/views/ShowSurveyUser.vue"));
 };
 
+
 var SurveyUsersRoutes = [{
   path: '/surveys-to-answer',
   name: 'surveysUserList',
@@ -42050,7 +42053,20 @@ var SurveyUsersRoutes = [{
 }, {
   path: '/surveys-to-answer/:surveyId',
   name: 'showSurveysUser',
-  component: ShowSurveyUser
+  component: ShowSurveyUser,
+  beforeEnter: function beforeEnter(to, from, next) {
+    try {
+      var surveyId = parseInt(to.params.surveyId);
+      var surveyTaken = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters['SurveysUser/surveysTakenByMe'].data.find(function (surveyTaken) {
+        return surveyTaken.data.survey.data.survey_id == surveyId;
+      }) || false;
+      if (!surveyTaken) next();
+    } catch (err) {
+      next({
+        name: 'surveysUserList'
+      });
+    }
+  }
 }];
 
 /***/ }),
@@ -42073,7 +42089,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
-var _mutations;
+var _getters, _mutations;
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -42092,9 +42108,10 @@ var SurveysUserStore = {
   state: {
     surveysUser: null,
     surveyUser: null,
-    surveysTaken: null
+    surveysTaken: null,
+    errors: null
   },
-  getters: _defineProperty({
+  getters: (_getters = {
     surveysUserList: function surveysUserList(state) {
       return state.surveysUser;
     },
@@ -42104,9 +42121,11 @@ var SurveysUserStore = {
     surveysTakenByMe: function surveysTakenByMe(state) {
       return state.surveysTaken;
     }
-  }, "surveysTakenByMe", function surveysTakenByMe(state) {
+  }, _defineProperty(_getters, "surveysTakenByMe", function surveysTakenByMe(state) {
     return state.surveysTaken;
-  }),
+  }), _defineProperty(_getters, "errorsList", function errorsList(state) {
+    return state.errors;
+  }), _getters),
   actions: {
     getSurveysTaken: function () {
       var _getSurveysTaken = _asyncToGenerator(
@@ -42220,22 +42239,31 @@ var SurveysUserStore = {
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref4.commit;
+                _context4.prev = 1;
                 surveyId = payload.surveyId, responses = payload.responses;
-                _context4.next = 4;
+                _context4.next = 5;
                 return axios.post("/api/surveys-to-answer/".concat(surveyId), {
                   responses: responses
                 });
 
-              case 4:
+              case 5:
                 res = _context4.sent;
+                commit(SET_ERRORS, null);
                 commit(UPDATE_SURVEYS_TAKEN, res.data);
+                _context4.next = 13;
+                break;
 
-              case 6:
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](1);
+                commit(SET_ERRORS, _context4.t0.response.data.errors);
+
+              case 13:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[1, 10]]);
       }));
 
       function answerSurvey(_x5, _x6) {
@@ -42253,6 +42281,8 @@ var SurveysUserStore = {
     state.surveysTaken = surveys;
   }), _defineProperty(_mutations, UPDATE_SURVEYS_TAKEN, function (state, survey) {
     state.surveysTaken.data.push(survey);
+  }), _defineProperty(_mutations, SET_ERRORS, function (state, payload) {
+    state.errors = payload;
   }), _mutations)
 };
 

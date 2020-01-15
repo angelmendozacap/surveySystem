@@ -11,6 +11,7 @@ export const SurveysUserStore = {
     surveysUser: null,
     surveyUser: null,
     surveysTaken: null,
+    errors: null,
   },
   getters: {
     surveysUserList(state) {
@@ -23,6 +24,9 @@ export const SurveysUserStore = {
     },
     surveysTakenByMe(state) {
       return state.surveysTaken
+    },
+    errorsList(state) {
+      return state.errors
     }
   },
   actions: {
@@ -45,10 +49,15 @@ export const SurveysUserStore = {
       commit(SET_SURVEY_USER, res.data)
     },
     answerSurvey: async ({ commit }, payload) => {
-      const { surveyId, responses } = payload
-      const res = await axios.post(`/api/surveys-to-answer/${surveyId}`, { responses })
+      try {
+        const { surveyId, responses } = payload
+        const res = await axios.post(`/api/surveys-to-answer/${surveyId}`, { responses })
 
-      commit(UPDATE_SURVEYS_TAKEN, res.data)
+        commit(SET_ERRORS, null)
+        commit(UPDATE_SURVEYS_TAKEN, res.data)
+      } catch (err) {
+        commit(SET_ERRORS, err.response.data.errors)
+      }
     }
   },
   mutations: {
@@ -63,6 +72,9 @@ export const SurveysUserStore = {
     },
     [UPDATE_SURVEYS_TAKEN](state, survey) {
       state.surveysTaken.data.push(survey)
+    },
+    [SET_ERRORS](state, payload) {
+      state.errors = payload
     }
   }
 }

@@ -24,6 +24,7 @@ export const SurveyStore = {
   },
   actions: {
     getSurveys: async ({ commit }) => {
+      commit(SET_SURVEYS, [])
       const res = await axios.get('/api/surveys')
       commit(SET_SURVEYS, res.data.data)
     },

@@ -51,8 +51,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_SurveyUserItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/SurveyUserItem */ "./resources/js/modules/SurveysUser/components/SurveyUserItem.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_SurveyUserItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/SurveyUserItem */ "./resources/js/modules/SurveysUser/components/SurveyUserItem.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -86,26 +94,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ShowSurveyUser',
   components: {
-    SurveyUserItem: _components_SurveyUserItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+    SurveyUserItem: _components_SurveyUserItem__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("SurveysUser", ["getOneSurvey", "answerSurvey"]), {
-    submitQuestions: function submitQuestions(e) {
-      var responses = [];
-      this.surveyUserItem.data.questions.forEach(function (question) {
-        var answer = {
-          answer_id: e.target[question.data.code_name].value || null,
-          question_id: question.data.question_id
-        };
-        responses.push(answer);
-      });
-      var data = {
-        surveyId: this.surveyUserItem.data.survey_id,
-        responses: responses
-      };
-      this.answerSurvey(data);
-    }
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("SurveysUser", ["getOneSurvey", "answerSurvey"]), {
+    submitQuestions: function () {
+      var _submitQuestions = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
+        var responses, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                responses = [];
+                this.surveyUserItem.data.questions.forEach(function (question) {
+                  var answer = {
+                    answer_id: e.target[question.data.code_name].value || null,
+                    question_id: question.data.question_id
+                  };
+                  responses.push(answer);
+                });
+                data = {
+                  surveyId: this.surveyUserItem.data.survey_id,
+                  responses: responses
+                };
+                _context.next = 5;
+                return this.answerSurvey(data);
+
+              case 5:
+                if (!this.errorsList) {
+                  this.$router.push({
+                    name: 'surveysUserList'
+                  });
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function submitQuestions(_x) {
+        return _submitQuestions.apply(this, arguments);
+      }
+
+      return submitQuestions;
+    }()
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])("SurveysUser", ["surveyUserItem"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])("SurveysUser", ["surveyUserItem"], "errorsList")),
   mounted: function mounted() {
     var surveyId = this.$route.params.surveyId;
     this.getOneSurvey(surveyId);
@@ -133,25 +171,26 @@ var render = function() {
     "article",
     { staticClass: "p-4 mb-5 pb-4 rounded bg-white shadow border-gray-500" },
     [
-      _c("p", { staticClass: "mb-1 text-blue-400 leading-tight font-bold" }, [
+      _c("p", { staticClass: "mb-1 text-blue-400 text-2xl leading-tight" }, [
         _vm._v(_vm._s(_vm.index) + ". " + _vm._s(_vm.question.data.name))
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "mb-1 text-gray-600 text-sm leading-tight" }, [
+      _c("span", { staticClass: "mb-1 text-gray-600 leading-tight" }, [
         _c("em", [_vm._v(_vm._s(_vm.question.data.subtext))])
       ]),
       _vm._v(" "),
       _c(
         "fieldset",
-        { staticClass: "border-2 rounded-lg p-4" },
+        { staticClass: "border-2 rounded-lg p-4 mt-1" },
         [
-          _c("legend", { staticClass: "text-gray-700 font-bold" }, [
+          _c("legend", { staticClass: "text-gray-500 text-sm font-bold" }, [
             _vm._v("Opciones")
           ]),
           _vm._v(" "),
           _vm._l(_vm.question.data.answers, function(answer, index) {
             return _c("div", { key: index }, [
               _c("input", {
+                staticClass: "mr-3",
                 attrs: {
                   type: "radio",
                   id:
@@ -162,6 +201,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", {
+                staticClass: "text-xl text-gray-600",
                 attrs: {
                   for:
                     _vm.question.data.code_name + "_a" + answer.data.answer_id
@@ -235,7 +275,7 @@ var render = function() {
             _c("div", { staticClass: "flex flex-col items-center" }, [
               _c(
                 "div",
-                { staticClass: "md:w-3/4 w-full" },
+                { staticClass: "md:w-4/5 w-full" },
                 [
                   _vm._l(_vm.surveyUserItem.data.questions, function(
                     question,

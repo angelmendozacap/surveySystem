@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Start from './views/Start'
 
 // Modules
 import { SurveyRoutes } from './modules/Survey/routes'
@@ -13,11 +12,12 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Start
+    redirect: { name: 'surveysUserList' }
   },
   ...SurveyRoutes,
   ...InputTypeRoutes,
-  ...SurveyUsersRoutes
+  ...SurveyUsersRoutes,
+  { path: '*', redirect: { name: 'home' } }
 ]
 
 export default new VueRouter({

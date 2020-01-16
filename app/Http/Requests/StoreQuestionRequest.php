@@ -27,7 +27,7 @@ class StoreQuestionRequest extends FormRequest
             'name' => 'required|string|max:255',
             'subtext' => 'nullable|string',
             'is_required' => 'boolean',
-            'input_type_id' => 'string|required'
+            'input_type_id' => 'numeric|required'
         ];
     }
 }

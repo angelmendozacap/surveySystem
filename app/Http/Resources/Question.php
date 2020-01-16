@@ -15,14 +15,15 @@ class Question extends JsonResource
     public function toArray($request)
     {
         return [
-            'question_id' => $this->id,
-            'name' => $this->name,
-            'code_name' => $this->code_name_input,
-            'subtext' => $this->subtext,
-            'survey_id' => $this->survey_id,
-            'is_required' => $this->is_required,
-            'input_type' => $this->inputType->name,
-            'option_group' => $this->optionGroup->name_group ?? $this->option_group_id
+            'data' => [
+                'question_id' => $this->id,
+                'survey_id' => $this->survey_id,
+                'name' => $this->name,
+                'code_name' => $this->code_name_input,
+                'subtext' => $this->subtext,
+                'is_required' => $this->is_required,
+                'input_type' => new InputType($this->inputType)
+            ]
         ];
     }
 }

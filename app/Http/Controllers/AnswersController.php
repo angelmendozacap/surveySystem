@@ -3,15 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use App\Survey;
+use App\Question;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Answer as AnswerResource;
 
 class AnswersController extends Controller
 {
-    private $arrayRequiredQuestions = [];
+    public function index(Question $question)
+    {
+        $answers = $question->answers->load('question.inputType');
+        return AnswerResource::collection($answers);
+    }
+
+    public function store(Question $question)
+    {
+        $answer = $question->answers()->create([
+            'answer' => 'Nueva Opción'
+        ]);
+
+        $answer->load('question.inputType');
+
+        return (new AnswerResource($answer))->response()->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function update(Answer $answer)
+    {
+        $data = request()->validate([
+            'answer' => 'required|string'
+        ]);
+
+        $answer->update($data);
+
+        $answer->load('question.inputType');
+
+        return (new AnswerResource($answer))->response()->setStatusCode(Response::HTTP_OK);
+    }
+
+    public function destroy(Answer $answer)
+    {
+        $answer->delete();
+
+        return response([], Response::HTTP_OK);
+    }
+
+    /* private $arrayRequiredQuestions = [];
 
     public function store(Request $request, Survey $survey)
     {
@@ -67,5 +105,5 @@ class AnswersController extends Controller
         return [
             'required' => "Este campo es obligatorio"
         ];
-    }
+    } */
 }

@@ -19,7 +19,7 @@ class Survey extends Model
 
     public function path()
     {
-        return url('/surveys/'.$this->id);
+        return '/surveys/' . $this->id;
     }
 
     public function questions()
@@ -30,5 +30,10 @@ class Survey extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function surveysAnswered()
+    {
+        return $this->hasMany(SurveyUser::class);
     }
 }

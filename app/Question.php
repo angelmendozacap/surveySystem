@@ -12,6 +12,16 @@ class Question extends Model
         'is_required' => 'boolean',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($question) {
+            $question->answers()->delete();
+        });
+    }
+
+
     public function getCodeNameInputAttribute()
     {
         return "s{$this->survey->id}_q{$this->id}";

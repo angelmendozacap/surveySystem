@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Answer;
+use App\InputType;
 use App\Role;
 use App\User;
 use App\Survey;
@@ -188,14 +190,26 @@ class SurveysTest extends TestCase
         $this->actingAs($user, 'api');
 
         $survey = factory(Survey::class)->create();
-        $questions = factory(Question::class, 3)->create(['survey_id' =>$survey->id]);
+
+        $inputType = factory(InputType::class)->create();
+        $questions = factory(Question::class, 3)->create([
+            'survey_id' => $survey->id,
+            'input_type_id' => $inputType->id
+        ]);
+
+        $questions->each(function ($question) {
+            factory(Answer::class)->create([
+                'question_id' => $question->id
+            ]);
+        });
 
         $response = $this->delete('/api/surveys/'.$survey->id, []);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
-        $this->assertCount(0, Question::all());
         $this->assertCount(0, Survey::all());
+        $this->assertCount(0, Question::all());
+        $this->assertCount(0, Answer::all());
     }
 
     /** @test */

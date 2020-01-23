@@ -13,7 +13,11 @@ class Survey extends Model
         parent::boot();
 
         static::deleting(function($survey) {
-            $survey->questions()->delete();
+            $questions = $survey->questions();
+
+            $questions->each(function ($question) { $question->answers()->delete(); });
+
+            $questions->delete();
         });
     }
 

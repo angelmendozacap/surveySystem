@@ -40325,7 +40325,10 @@ __webpack_require__.r(__webpack_exports__);
 var Roles = {
   Admin: 'admin',
   Creator: 'creator',
-  Student: 'student'
+  Student: 'student',
+  onlyAdminsAndCreators: function onlyAdminsAndCreators(rolName) {
+    return rolName == this.Admin || rolName == this.Creator;
+  }
 };
 
 /***/ }),
@@ -40621,7 +40624,10 @@ __webpack_require__.r(__webpack_exports__);
 var InputTypeRoutes = [{
   path: '/input-type',
   name: 'inputTypeList',
-  component: _views_InputTypeList__WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _views_InputTypeList__WEBPACK_IMPORTED_MODULE_0__["default"],
+  meta: {
+    onlyAdminsAndCreators: true
+  }
 }];
 
 /***/ }),
@@ -41625,15 +41631,24 @@ __webpack_require__.r(__webpack_exports__);
 var SurveyRoutes = [{
   path: '/surveys',
   name: 'surveyList',
-  component: _views_SurveyList__WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _views_SurveyList__WEBPACK_IMPORTED_MODULE_0__["default"],
+  meta: {
+    onlyAdminsAndCreators: true
+  }
 }, {
   path: '/surveys/:surveyId',
   name: 'showSurvey',
-  component: _views_ShowSurvey__WEBPACK_IMPORTED_MODULE_1__["default"]
+  component: _views_ShowSurvey__WEBPACK_IMPORTED_MODULE_1__["default"],
+  meta: {
+    onlyAdminsAndCreators: true
+  }
 }, {
   path: '/surveys/create',
   name: 'createSurvey',
-  component: _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_2__["default"]
+  component: _views_CreateSurvey__WEBPACK_IMPORTED_MODULE_2__["default"],
+  meta: {
+    onlyAdminsAndCreators: true
+  }
 }];
 
 /***/ }),
@@ -42399,6 +42414,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_Survey_routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/Survey/routes */ "./resources/js/modules/Survey/routes.js");
 /* harmony import */ var _modules_InputType_routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/InputType/routes */ "./resources/js/modules/InputType/routes.js");
 /* harmony import */ var _modules_SurveysUser_routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/SurveysUser/routes */ "./resources/js/modules/SurveysUser/routes.js");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
+/* harmony import */ var _helpers_roles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./helpers/roles */ "./resources/js/helpers/roles.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -42409,6 +42426,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
  // Modules
+
+
 
 
 
@@ -42426,10 +42445,32 @@ var routes = [{
     name: 'home'
   }
 }]);
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   routes: routes
-}));
+});
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.onlyAdminsAndCreators;
+  })) {
+    if (!_store_index__WEBPACK_IMPORTED_MODULE_5__["default"].getters['User/authUser']) {
+      next({
+        name: 'home'
+      });
+    } else {
+      if (!_helpers_roles__WEBPACK_IMPORTED_MODULE_6__["Roles"].onlyAdminsAndCreators(_store_index__WEBPACK_IMPORTED_MODULE_5__["default"].getters['User/authUser'].data.role.data.name)) {
+        next({
+          name: 'home'
+        });
+      } else {
+        next();
+      }
+    }
+  } else {
+    next();
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 

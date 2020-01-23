@@ -6,16 +6,19 @@ export const SurveyRoutes = [
   {
     path: '/surveys',
     name: 'surveyList',
-    component: SurveyList
+    component: SurveyList,
+    meta: { onlyAdminsAndCreators: true }
   },
   {
     path: '/surveys/:surveyId',
     name: 'showSurvey',
-    component: ShowSurvey
+    component: ShowSurvey,
+    meta: { onlyAdminsAndCreators: true }
   },
   {
     path: '/surveys/create',
     name: 'createSurvey',
-    component: CreateSurvey
+    component: CreateSurvey,
+    meta: { onlyAdminsAndCreators: true }
   }
 ]

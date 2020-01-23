@@ -1,5 +1,9 @@
 export const Roles = {
   Admin: 'admin',
   Creator: 'creator',
-  Student: 'student'
+  Student: 'student',
+
+  onlyAdminsAndCreators(rolName) {
+    return rolName == this.Admin || rolName == this.Creator
+  }
 }

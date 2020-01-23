@@ -1,6 +1,4 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/components/show-survey-user.bundle.js": "/js/components/show-survey-user.bundle.js",
-    "/js/components/surveys-user-list.bundle.js": "/js/components/surveys-user-list.bundle.js"
+    "/css/app.css": "/css/app.css"
 }

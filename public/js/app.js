@@ -3031,10 +3031,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SurveyList",
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("Survey", ["getSurveys"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("Survey", ["getSurveys", "deleteSurvey"])),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("Survey", ["surveyList"])),
   mounted: function mounted() {
     this.getSurveys();
@@ -3132,6 +3138,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 // module
 exports.push([module.i, ".question-item__btn[data-v-20d9ffa6] {\n  opacity: 0;\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  -webkit-transition: all 0.3s;\n  transition: all 0.3s;\n}\n.question-item:hover .question-item__btn[data-v-20d9ffa6] {\n  opacity: 1;\n  -webkit-transform: scale(1);\n          transform: scale(1);\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".survey-item__btn[data-v-d66ef450] {\n  opacity: 0;\n  -webkit-transform: scale(0);\n          transform: scale(0);\n  -webkit-transition: all 0.3s;\n  transition: all 0.3s;\n}\n.survey-item:hover .survey-item__btn[data-v-d66ef450] {\n  opacity: 1;\n  -webkit-transform: scale(1);\n          transform: scale(1);\n}", ""]);
 
 // exports
 
@@ -21643,6 +21668,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -23635,10 +23690,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -23669,19 +23724,28 @@ var render = function() {
           { staticClass: "mb-5 rounded bg-white shadow" },
           _vm._l(_vm.surveyList, function(survey, index) {
             return _c(
-              "router-link",
+              "article",
               {
                 key: index,
                 staticClass:
-                  "p-4 border-b border-gray-400 hover:bg-gray-200 cursor-pointer",
-                attrs: { to: survey.links.self, tag: "article" }
+                  "survey-item p-4 border-b border-gray-400 hover:bg-gray-100 cursor-pointer relative"
               },
               [
                 _c("div", { staticClass: "flex items-center" }, [
-                  _c("h2", {
-                    staticClass: "text-xl font-semibold text-blue-500",
-                    domProps: { textContent: _vm._s(survey.data.survey_name) }
-                  }),
+                  _c(
+                    "h2",
+                    { staticClass: "text-2xl font-semibold text-blue-500" },
+                    [
+                      _c("router-link", {
+                        staticClass: "hover:underline",
+                        attrs: { to: survey.links.self },
+                        domProps: {
+                          textContent: _vm._s(survey.data.survey_name)
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("span", {
                     staticClass: "ml-2 mt-1 w-3 h-3 rounded-full",
@@ -23694,11 +23758,25 @@ var render = function() {
                 _vm._v(" "),
                 _c("small", { staticClass: "text-gray-600" }, [
                   _vm._v("Creado " + _vm._s(survey.data.created_at))
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "z-50 survey-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteSurvey(survey.data.survey_id)
+                      }
+                    }
+                  },
+                  [_vm._v("Borrar")]
+                )
               ]
             )
           }),
-          1
+          0
         )
   ])
 }
@@ -41576,6 +41654,7 @@ var SET_SURVEYS = 'survey/SET_SURVEYS';
 var SET_SURVEY = 'survey/SET_SURVEY';
 var SET_ERRORS = 'survey/SET_ERRORS';
 var UPDATE_SURVEY = 'survey/UPDATE_SURVEY';
+var DELETE_SURVEY = 'survey/DELETE_SURVEY';
 var SurveyStore = {
   namespaced: true,
   state: {
@@ -41704,44 +41783,83 @@ var SurveyStore = {
 
       return createSurvey;
     }(),
-    changeSurveyStatus: function () {
-      var _changeSurveyStatus = _asyncToGenerator(
+    deleteSurvey: function () {
+      var _deleteSurvey = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref5, payload) {
-        var commit, status, surveyId, res;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref5, surveyId) {
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref5.commit;
                 _context4.prev = 1;
+                _context4.next = 4;
+                return axios["delete"]("/api/surveys/".concat(surveyId));
+
+              case 4:
+                commit(DELETE_SURVEY, surveyId);
+                commit(SET_ERRORS, null);
+                _context4.next = 11;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](1);
+                commit(SET_ERRORS, _context4.t0.response.data.errors);
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[1, 8]]);
+      }));
+
+      function deleteSurvey(_x6, _x7) {
+        return _deleteSurvey.apply(this, arguments);
+      }
+
+      return deleteSurvey;
+    }(),
+    changeSurveyStatus: function () {
+      var _changeSurveyStatus = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref6, payload) {
+        var commit, status, surveyId, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref6.commit;
+                _context5.prev = 1;
                 status = payload.status, surveyId = payload.surveyId;
-                _context4.next = 5;
+                _context5.next = 5;
                 return axios.patch("/api/surveys/".concat(surveyId, "/change-status"), {
                   status: status
                 });
 
               case 5:
-                res = _context4.sent;
+                res = _context5.sent;
                 commit(UPDATE_SURVEY, res.data);
                 commit(SET_ERRORS, null);
-                _context4.next = 13;
+                _context5.next = 13;
                 break;
 
               case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](1);
-                commit(SET_ERRORS, _context4.t0.response.data.errors);
+                _context5.prev = 10;
+                _context5.t0 = _context5["catch"](1);
+                commit(SET_ERRORS, _context5.t0.response.data.errors);
 
               case 13:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, null, [[1, 10]]);
+        }, _callee5, null, [[1, 10]]);
       }));
 
-      function changeSurveyStatus(_x6, _x7) {
+      function changeSurveyStatus(_x8, _x9) {
         return _changeSurveyStatus.apply(this, arguments);
       }
 
@@ -41753,6 +41871,10 @@ var SurveyStore = {
   }), _defineProperty(_mutations, SET_SURVEY, function (state, payload) {
     state.surveys.push(payload);
     state.survey = payload;
+  }), _defineProperty(_mutations, DELETE_SURVEY, function (state, payload) {
+    state.surveys = state.surveys.filter(function (survey) {
+      return survey.data.survey_id != payload;
+    });
   }), _defineProperty(_mutations, UPDATE_SURVEY, function (state, payload) {
     state.survey = Object.assign({}, payload);
   }), _defineProperty(_mutations, SET_ERRORS, function (state, payload) {
@@ -41909,9 +42031,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SurveyList.vue?vue&type=template&id=d66ef450& */ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&");
+/* harmony import */ var _SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SurveyList.vue?vue&type=template&id=d66ef450&scoped=true& */ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true&");
 /* harmony import */ var _SurveyList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SurveyList.vue?vue&type=script&lang=js& */ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& */ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -41919,13 +42043,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _SurveyList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "d66ef450",
   null
   
 )
@@ -41951,19 +42075,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=style&index=0&id=d66ef450&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_style_index_0_id_d66ef450_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true& ***!
+  \*****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SurveyList.vue?vue&type=template&id=d66ef450& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SurveyList.vue?vue&type=template&id=d66ef450&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/modules/Survey/views/SurveyList.vue?vue&type=template&id=d66ef450&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SurveyList_vue_vue_type_template_id_d66ef450_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -42429,8 +42569,8 @@ var actions = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/afedo-the-dark/PERSONAL/LaravelProjects/surveySystem/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /media/afedo-the-dark/PERSONAL/LaravelProjects/surveySystem/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Infinity Ward\PERSONAL\LaravelProjects\surveySystem\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Infinity Ward\PERSONAL\LaravelProjects\surveySystem\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

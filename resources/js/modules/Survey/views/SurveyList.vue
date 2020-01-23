@@ -9,26 +9,26 @@
 
     <div v-else class="mb-5 rounded bg-white shadow">
       <article
-        class="survey-item p-4 border-b border-gray-400 hover:bg-gray-100 cursor-pointer relative"
+        class="survey-item border-b border-gray-400 hover:bg-gray-200 cursor-pointer flex"
         v-for="(survey,index) in surveyList"
         :key="index"
       >
-        <div class="flex items-center">
-          <h2 class="text-2xl font-semibold text-blue-500">
-            <router-link
-              class="hover:underline"
-              :to="survey.links.self"
-              v-text="survey.data.survey_name"
-            ></router-link>
-          </h2>
-          <span
-            class="ml-2 mt-1 w-3 h-3 rounded-full"
-            :class="{'bg-green-600': survey.data.status === 'ready', 'bg-accent': survey.data.status === 'draft'}"
-          ></span>
-        </div>
-        <small class="text-gray-600">Creado {{ survey.data.created_at }}</small>
+        <router-link :to="survey.links.self" class="flex-1 p-4">
+          <div class="flex items-center">
+            <h2 class="text-3xl font-semibold text-blue-500" v-text="survey.data.survey_name"></h2>
+            <span
+              class="ml-2 mt-1 w-3 h-3 rounded-full"
+              :class="{'bg-green-600': survey.data.status === 'ready', 'bg-accent': survey.data.status === 'draft'}"
+            ></span>
+          </div>
+          <p class="text-gray-600">Creado {{ survey.data.created_at }}</p>
+        </router-link>
 
-        <button @click="deleteSurvey(survey.data.survey_id)" class="z-50 survey-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0">Borrar</button>
+        <div class="z-10 flex flex-col">
+          <button @click="deleteSurvey(survey.data.survey_id)" class="survey-item__btn px-2 py-1 text-sm bg-red-500 hover:bg-red-400 text-white uppercase">Borrar</button>
+          <button class="survey-item__btn px-2 py-1 text-sm bg-teal-500 hover:bg-teal-400 text-white uppercase">Resultados</button>
+        </div>
+
       </article>
     </div>
   </section>

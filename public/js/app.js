@@ -23728,52 +23728,65 @@ var render = function() {
               {
                 key: index,
                 staticClass:
-                  "survey-item p-4 border-b border-gray-400 hover:bg-gray-100 cursor-pointer relative"
+                  "survey-item border-b border-gray-400 hover:bg-gray-200 cursor-pointer flex"
               },
               [
-                _c("div", { staticClass: "flex items-center" }, [
-                  _c(
-                    "h2",
-                    { staticClass: "text-2xl font-semibold text-blue-500" },
-                    [
-                      _c("router-link", {
-                        staticClass: "hover:underline",
-                        attrs: { to: survey.links.self },
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "flex-1 p-4",
+                    attrs: { to: survey.links.self }
+                  },
+                  [
+                    _c("div", { staticClass: "flex items-center" }, [
+                      _c("h2", {
+                        staticClass: "text-3xl font-semibold text-blue-500",
                         domProps: {
                           textContent: _vm._s(survey.data.survey_name)
                         }
+                      }),
+                      _vm._v(" "),
+                      _c("span", {
+                        staticClass: "ml-2 mt-1 w-3 h-3 rounded-full",
+                        class: {
+                          "bg-green-600": survey.data.status === "ready",
+                          "bg-accent": survey.data.status === "draft"
+                        }
                       })
-                    ],
-                    1
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-gray-600" }, [
+                      _vm._v("Creado " + _vm._s(survey.data.created_at))
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "z-10 flex flex-col" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "survey-item__btn px-2 py-1 text-sm bg-red-500 hover:bg-red-400 text-white uppercase",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteSurvey(survey.data.survey_id)
+                        }
+                      }
+                    },
+                    [_vm._v("Borrar")]
                   ),
                   _vm._v(" "),
-                  _c("span", {
-                    staticClass: "ml-2 mt-1 w-3 h-3 rounded-full",
-                    class: {
-                      "bg-green-600": survey.data.status === "ready",
-                      "bg-accent": survey.data.status === "draft"
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("small", { staticClass: "text-gray-600" }, [
-                  _vm._v("Creado " + _vm._s(survey.data.created_at))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "z-50 survey-item__btn px-2 py-1 text-sm bg-red-500 text-white hover:bg-red-400 uppercase absolute right-0 top-0",
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteSurvey(survey.data.survey_id)
-                      }
-                    }
-                  },
-                  [_vm._v("Borrar")]
-                )
-              ]
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "survey-item__btn px-2 py-1 text-sm bg-teal-500 hover:bg-teal-400 text-white uppercase"
+                    },
+                    [_vm._v("Resultados")]
+                  )
+                ])
+              ],
+              1
             )
           }),
           0

@@ -126,7 +126,7 @@ var render = function() {
                     },
                     [
                       _c("h2", {
-                        staticClass: "text-xl font-semibold text-blue-500",
+                        staticClass: "text-2xl font-semibold text-blue-500",
                         domProps: {
                           textContent: _vm._s(survey.data.survey_name)
                         }

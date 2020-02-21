@@ -2,6 +2,7 @@ export const SET_SURVEYS = 'survey/SET_SURVEYS'
 export const SET_SURVEY = 'survey/SET_SURVEY'
 export const SET_ERRORS = 'survey/SET_ERRORS'
 const UPDATE_SURVEY = 'survey/UPDATE_SURVEY'
+const DELETE_SURVEY = 'survey/DELETE_SURVEY'
 
 export const SurveyStore = {
   namespaced: true,
@@ -42,6 +43,16 @@ export const SurveyStore = {
         commit(SET_ERRORS, err.response.data.errors)
       }
     },
+    deleteSurvey: async ({ commit }, surveyId) => {
+      try {
+        await axios.delete(`/api/surveys/${surveyId}`)
+
+        commit(DELETE_SURVEY, surveyId)
+        commit(SET_ERRORS, null)
+      } catch (err) {
+        commit(SET_ERRORS, err.response.data.errors)
+      }
+    },
     changeSurveyStatus: async ({ commit }, payload) => {
       try {
         const { status, surveyId } = payload
@@ -61,6 +72,9 @@ export const SurveyStore = {
     [SET_SURVEY](state, payload) {
       state.surveys.push(payload)
       state.survey = payload
+    },
+    [DELETE_SURVEY](state, payload) {
+      state.surveys = state.surveys.filter(survey => survey.data.survey_id != payload)
     },
     [UPDATE_SURVEY](state, payload) {
       state.survey = Object.assign({}, payload)

@@ -4,6 +4,7 @@ export const InputTypeRoutes = [
   {
     path: '/input-type',
     name: 'inputTypeList',
-    component: InputTypeList
+    component: InputTypeList,
+    meta: { onlyAdminsAndCreators: true }
   }
 ]
